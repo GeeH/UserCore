@@ -1,6 +1,6 @@
 {
   "name": "roave/user",
-  "description": "A generic use module",
+  "description": "A generic user module",
   "type": "module",
   "authors": [
     {

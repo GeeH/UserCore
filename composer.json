@@ -23,5 +23,11 @@
     "psr-0": {
       "Roave\\User": "src/"
     }
+  },
+
+  "autoload-dev": {
+    "psr-0": {
+      "Roave\\UserTest": "test/"
+    }
   }
 }

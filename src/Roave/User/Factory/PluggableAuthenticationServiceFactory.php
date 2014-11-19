@@ -40,6 +40,8 @@ namespace Roave\User\Factory;
 
 use BaconAuthentication\PluggableAuthenticationService;
 use BaconAuthentication\Plugin\HttpPost;
+use Roave\User\Authentication\Plugin\PasswordAuthentication;
+use Roave\User\Options\AuthenticationOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -54,8 +56,12 @@ class PluggableAuthenticationServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        /** @var AuthenticationOptions $options */
+        $options = $serviceLocator->get(AuthenticationOptions::class);
+
         $service = new PluggableAuthenticationService();
-        $service->addPlugin(new HttpPost('/register'));
+        $service->addPlugin(new PasswordAuthentication());
+        $service->addPlugin(new HttpPost($options->getLoginRoute()));
 
         return $service;
     }

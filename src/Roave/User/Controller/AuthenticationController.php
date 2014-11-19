@@ -84,17 +84,14 @@ class AuthenticationController extends AbstractActionController
     }
 
     /**
-     * Attempt to authenticate the user
+     * Display the standard login form
      *
-     * @return ViewModel|Response
+     * @return ViewModel
      */
-    public function loginAction()
+    public function indexAction()
     {
-        $result = $this->authenticationService->authenticate($this->getRequest(), $this->getResponse());
-
-        if ($result->isChallenge()) {
-            return $this->getResponse();
-        }
+        $this->form->setAttribute('method', 'POST');
+        $this->form->setAttribute('action', $this->url()->fromRoute($this->options->getAuthenticationRoute()));
 
         $model = new ViewModel();
         $model->setTemplate($this->options->getLoginTemplate());
@@ -103,7 +100,36 @@ class AuthenticationController extends AbstractActionController
         return $model;
     }
 
+    /**
+     * Attempt to authenticate the user
+     *
+     * @return Response
+     */
+    public function authenticateAction()
+    {
+        $result = $this->authenticationService->authenticate($this->getRequest(), $this->getResponse());
+
+        if ($result->isChallenge()) {
+            return $this->getResponse();
+        }
+    }
+
+    /**
+     * Reset the users session
+     *
+     * @return ViewModel|Response
+     */
     public function logoutAction()
     {
+        $this->authenticationService->resetCredentials($this->getRequest());
+
+        if ($this->options->getLogoutRedirectToRoute() !== null) {
+            return $this->redirect($this->options->getLogoutRedirectToRoute());
+        }
+
+        $model = new ViewModel();
+        $model->setTemplate($this->options->getLogoutTemplate());
+
+        return $model;
     }
 }

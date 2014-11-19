@@ -38,8 +38,16 @@
 
 namespace Roave\User\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Roave\User\Entity\UserEntityInterface;
 
-interface UserRepositoryInterface extends ObjectRepository
+interface UserRepositoryInterface
 {
+    /**
+     * Retrieve a user by it's identity
+     *
+     * @param string $identity
+     *
+     * @return UserEntityInterface|null
+     */
+    public function getByIdentity($identity);
 }

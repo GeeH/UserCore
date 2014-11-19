@@ -73,6 +73,13 @@ return [
         ]
     ],
 
+    'view_manager' => [
+        'template_map' => [
+            'roave/user/authentication/login'  => __DIR__ . '/../view/authentication/login.phtml',
+            'roave/user/authentication/logout' => __DIR__ . '/../view/authentication/logout.phtml',
+        ]
+    ],
+
     'roave' => [
         'options' => include __DIR__ . '/roave.options.config.php'
     ],

@@ -36,69 +36,55 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\User\Form;
+namespace Roave\User\Authentication\Plugin;
 
-use Zend\Form\Element\Csrf as CsrfElement;
-use Zend\Form\Element\Password;
-use Zend\Form\Element\Submit;
-use Zend\Form\Element\Text;
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Validator\Csrf as CsrfValidator;
+use BaconAuthentication\Plugin\AuthenticationPluginInterface;
+use BaconAuthentication\Result\Error;
+use BaconAuthentication\Result\Result;
+use BaconUser\Password\HandlerAggregate;
+use Roave\User\Repository\UserRepositoryInterface;
+use Zend\Stdlib\ParametersInterface;
 
-class AuthenticationForm extends Form implements InputFilterProviderInterface
+class PasswordAuthentication implements AuthenticationPluginInterface
 {
     /**
-     * {@inheritDoc}
+     * @var HandlerAggregate
      */
-    public function init()
+    private $passwordHandler;
+
+    /**
+     * @var UserRepositoryInterface
+     */
+    private $userRepository;
+
+    /**
+     * @param UserRepositoryInterface $userRepository
+     * @param HandlerAggregate        $passwordHandler
+     */
+    public function __construct(UserRepositoryInterface $userRepository, HandlerAggregate $passwordHandler)
     {
-        $this->add([
-            'name' => 'csrf_nonce',
-            'type' => CsrfElement::class
-        ]);
-
-        $this->add([
-            'name' => 'identity',
-            'type' => Text::class,
-
-            'options' => [
-                'label' => 'Identity'
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'password',
-            'type' => Password::class,
-
-            'options' => [
-                'label' => 'Password'
-            ]
-        ]);
-
-        $this->add([
-            'name' => 'submit',
-            'type' => Submit::class,
-
-            'attributes' => [
-                'value' => 'Login',
-            ]
-        ]);
+        $this->userRepository  = $userRepository;
+        $this->passwordHandler = $passwordHandler;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getInputFilterSpecification()
+    public function authenticateCredentials(ParametersInterface $credentials)
     {
-        return [
-            'csrf_nonce' => [
-                'validators' => [
-                    [
-                        'name' => CsrfValidator::class
-                    ]
-                ]
-            ]
-        ];
+        $user = $this->userRepository->getByIdentity($credentials->get('identity'));
+        if (! $user) {
+            return new Error('Identity not found', 'No user matches the given credentials');
+        }
+
+        if (! $this->passwordHandler->supports($user->getPassword())) {
+            throw new Exception\LogicException('A unsupported password hash was found.');
+        }
+
+        if (!$this->passwordHandler->compare($credentials->get('password'), $user->getPassword())) {
+            return new Error('Invalid password', 'No user matches the given credentials');
+        }
+
+        return new Result(Result::STATE_SUCCESS, $user);
     }
 }

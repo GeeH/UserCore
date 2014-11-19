@@ -44,6 +44,27 @@ use Zend\Stdlib\AbstractOptions;
 class AuthenticationOptions extends AbstractOptions
 {
     /**
+     * The field that is the users identity
+     *
+     * @var string
+     */
+    private $identityField = 'email';
+
+    /**
+     * The route to use that actually executes the authentication process
+     *
+     * @var string
+     */
+    private $authenticationRoute = 'authenticate';
+
+    /**
+     * The route used for the login page
+     *
+     * @var string
+     */
+    private $loginRoute = 'login';
+
+    /**
      * The template that contains the login form
      *
      * @var string
@@ -70,6 +91,13 @@ class AuthenticationOptions extends AbstractOptions
      * @var string
      */
     private $authenticationForm = AuthenticationForm::class;
+
+    /**
+     * The route used to logout
+     *
+     * @var string
+     */
+    private $logoutRoute = 'logout';
 
     /**
      * The template user when the user has logged out
@@ -179,5 +207,69 @@ class AuthenticationOptions extends AbstractOptions
     public function setLogoutRedirectToRoute($logoutRedirectToRoute)
     {
         $this->logoutRedirectToRoute = $logoutRedirectToRoute ? (string) $logoutRedirectToRoute : null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthenticationRoute()
+    {
+        return $this->authenticationRoute;
+    }
+
+    /**
+     * @param string $authenticationRoute
+     */
+    public function setAuthenticationRoute($authenticationRoute)
+    {
+        $this->authenticationRoute = (string) $authenticationRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLoginRoute()
+    {
+        return $this->loginRoute;
+    }
+
+    /**
+     * @param string $loginRoute
+     */
+    public function setLoginRoute($loginRoute)
+    {
+        $this->loginRoute = (string) $loginRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogoutRoute()
+    {
+        return $this->logoutRoute;
+    }
+
+    /**
+     * @param string $logoutRoute
+     */
+    public function setLogoutRoute($logoutRoute)
+    {
+        $this->logoutRoute = (string) $logoutRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentityField()
+    {
+        return $this->identityField;
+    }
+
+    /**
+     * @param string $identityField
+     */
+    public function setIdentityField($identityField)
+    {
+        $this->identityField = (string) $identityField;
     }
 }

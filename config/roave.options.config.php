@@ -37,9 +37,14 @@
  */
 
 use Roave\User\Options\AuthenticationOptions;
+use Roave\User\Options\RegistrationOptions;
 
 return [
     AuthenticationOptions::class => [
+
+    ],
+
+    RegistrationOptions::class => [
 
     ]
 ];

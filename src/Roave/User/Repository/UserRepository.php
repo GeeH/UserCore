@@ -33,14 +33,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 namespace Roave\User\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Roave\User\Options\AuthenticationOptions;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository implements UserRepositoryInterface, ObjectRepository
 {
     /**
      * @var ObjectRepository
@@ -48,10 +49,16 @@ class UserRepository implements UserRepositoryInterface
     private $objectRepository;
 
     /**
+     * @var AuthenticationOptions
+     */
+    private $options;
+
+    /**
      * @param ObjectRepository $objectRepository
      */
-    public function __construct(ObjectRepository $objectRepository)
+    public function __construct(ObjectRepository $objectRepository, AuthenticationOptions $options)
     {
+        $this->options          = $options;
         $this->objectRepository = $objectRepository;
     }
 

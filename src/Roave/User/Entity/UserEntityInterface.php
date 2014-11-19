@@ -36,69 +36,32 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\User\Form;
+namespace Roave\User\Entity;
 
-use Zend\Form\Element\Csrf as CsrfElement;
-use Zend\Form\Element\Password;
-use Zend\Form\Element\Submit;
-use Zend\Form\Element\Text;
-use Zend\Form\Form;
-use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Validator\Csrf as CsrfValidator;
+use DateTime;
 
-class AuthenticationForm extends Form implements InputFilterProviderInterface
+interface UserEntityInterface
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function init()
-    {
-        $this->add([
-            'name' => 'csrf_nonce',
-            'type' => CsrfElement::class
-        ]);
+    public function getId();
 
-        $this->add([
-            'name' => 'identity',
-            'type' => Text::class,
+    public function getUsername();
+    public function setUsername($username);
 
-            'options' => [
-                'label' => 'Identity'
-            ]
-        ]);
+    public function getEmail();
+    public function setEmail($email);
 
-        $this->add([
-            'name' => 'password',
-            'type' => Password::class,
+    public function getPassword();
+    public function setPassword($password);
 
-            'options' => [
-                'label' => 'Password'
-            ]
-        ]);
+    public function getFirstName();
+    public function setFirstName($firstName);
 
-        $this->add([
-            'name' => 'submit',
-            'type' => Submit::class,
+    public function getLastName();
+    public function setLastName($lastName);
 
-            'attributes' => [
-                'value' => 'Login',
-            ]
-        ]);
-    }
+    public function getCreatedAt();
+    public function setCreatedAt(DateTime $dateTime);
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getInputFilterSpecification()
-    {
-        return [
-            'csrf_nonce' => [
-                'validators' => [
-                    [
-                        'name' => CsrfValidator::class
-                    ]
-                ]
-            ]
-        ];
-    }
+    public function getUpdatedAt();
+    public function setUpdatedAt(DateTime $dateTime);
 }

@@ -65,6 +65,14 @@ class UserRepository implements UserRepositoryInterface, ObjectRepository
     /**
      * {@inheritDoc}
      */
+    public function getByIdentity($identity)
+    {
+        return $this->findOneBy([$this->options->getIdentityField() => (string) $identity]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function find($id)
     {
         return $this->objectRepository->find($id);

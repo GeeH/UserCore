@@ -49,15 +49,8 @@ class AuthenticationControllerTest extends AbstractHttpControllerTestCase
         $this->setApplicationConfig(Bootstrap::getServiceManager()->get('ApplicationConfig'));
     }
 
-    public function testHttpPostAuth()
+    public function test()
     {
-        $config = $this->getApplicationServiceLocator()->get('config');
-
-        print_r($config);
-
         $this->dispatch('/login', Request::METHOD_GET);
-
-        var_dump($this->getResponse());
-        exit;
     }
 }

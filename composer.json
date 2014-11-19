@@ -1,0 +1,27 @@
+{
+  "name": "roave/user",
+  "description": "A generic use module",
+  "type": "module",
+  "authors": [
+    {
+      "name": "Antoine Hedgecock",
+      "email": "antoine@roave.com"
+    }
+  ],
+  "require": {
+    "zendframework/zendframework": "~2.3.0",
+    "doctrine/doctrine-module": "~0.8.0",
+    "php": ">=5.5.0",
+    "bacon/bacon-authentication": "dev-master@dev"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0",
+    "squizlabs/php_codesniffer": "~1.5.2"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Roave\\User": "src/"
+    }
+  }
+}

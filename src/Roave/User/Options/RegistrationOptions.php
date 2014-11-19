@@ -48,14 +48,14 @@ class RegistrationOptions extends AbstractOptions
      *
      * @var string
      */
-    protected $template = 'roave/user/registration/form';
+    private $template = 'roave/user/registration/form';
 
     /**
      * The form to use
      *
      * @var string
      */
-    protected $form = RegistrationForm::class;
+    private $form = RegistrationForm::class;
 
     /**
      * @return string

@@ -48,42 +48,42 @@ class AuthenticationOptions extends AbstractOptions
      *
      * @var string
      */
-    protected $loginTemplate = 'roave/user/authentication/login';
+    private $loginTemplate = 'roave/user/authentication/login';
 
     /**
      * The url to redirect the user to on a successful authentication
      *
      * @var string|null
      */
-    protected $loginRedirectToRoute = null;
+    private $loginRedirectToRoute;
 
     /**
      * The query parameter to user to redirect the user
      *
      * @var string
      */
-    protected $redirectField = 'next';
+    private $redirectField = 'next';
 
     /**
      * The authentication form to be used
      *
      * @var string
      */
-    protected $authenticationForm = AuthenticationForm::class;
+    private $authenticationForm = AuthenticationForm::class;
 
     /**
      * The template user when the user has logged out
      *
      * @var string
      */
-    protected $logoutTemplate = 'roave/user/authentication/logout';
+    private $logoutTemplate = 'roave/user/authentication/logout';
 
     /**
      * If not null, this route is used instead of displaying a logout template
      *
      * @var string|null
      */
-    protected $logoutRedirectToRoute = null;
+    private $logoutRedirectToRoute;
 
     /**
      * @return string
@@ -98,7 +98,7 @@ class AuthenticationOptions extends AbstractOptions
      */
     public function setLoginTemplate($loginTemplate)
     {
-        $this->loginTemplate = $loginTemplate;
+        $this->loginTemplate = (string) $loginTemplate;
     }
 
     /**
@@ -114,7 +114,7 @@ class AuthenticationOptions extends AbstractOptions
      */
     public function setLoginRedirectToRoute($loginRedirectToRoute)
     {
-        $this->loginRedirectToRoute = $loginRedirectToRoute;
+        $this->loginRedirectToRoute = $loginRedirectToRoute ? (string) $loginRedirectToRoute : null;
     }
 
     /**
@@ -130,7 +130,7 @@ class AuthenticationOptions extends AbstractOptions
      */
     public function setRedirectField($redirectField)
     {
-        $this->redirectField = $redirectField;
+        $this->redirectField = (string)$redirectField;
     }
 
     /**
@@ -146,7 +146,7 @@ class AuthenticationOptions extends AbstractOptions
      */
     public function setAuthenticationForm($authenticationForm)
     {
-        $this->authenticationForm = $authenticationForm;
+        $this->authenticationForm = (string) $authenticationForm;
     }
 
     /**
@@ -162,7 +162,7 @@ class AuthenticationOptions extends AbstractOptions
      */
     public function setLogoutTemplate($logoutTemplate)
     {
-        $this->logoutTemplate = $logoutTemplate;
+        $this->logoutTemplate = (string) $logoutTemplate;
     }
 
     /**
@@ -178,6 +178,6 @@ class AuthenticationOptions extends AbstractOptions
      */
     public function setLogoutRedirectToRoute($logoutRedirectToRoute)
     {
-        $this->logoutRedirectToRoute = $logoutRedirectToRoute;
+        $this->logoutRedirectToRoute = $logoutRedirectToRoute ? (string) $logoutRedirectToRoute : null;
     }
 }

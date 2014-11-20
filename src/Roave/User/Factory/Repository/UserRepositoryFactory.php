@@ -39,6 +39,7 @@
 namespace Roave\User\Factory\Repository;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Roave\User\Entity\AbstractUserEntity;
 use Roave\User\Entity\UserEntityInterface;
 use Roave\User\Options\AuthenticationOptions;
 use Roave\User\Repository\UserRepository;
@@ -60,7 +61,7 @@ class UserRepositoryFactory implements FactoryInterface
         $objectManager = $serviceLocator->get('Roave\User\ObjectManager');
 
         return new UserRepository(
-            $objectManager->getRepository(UserEntityInterface::class),
+            $objectManager->getRepository(AbstractUserEntity::class),
             $serviceLocator->get(AuthenticationOptions::class)
         );
     }

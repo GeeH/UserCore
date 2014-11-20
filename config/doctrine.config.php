@@ -36,6 +36,21 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-return [
+use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
+return [
+    'driver' => [
+        'roave_user_xml_driver' => [
+            'class'     => XmlDriver::class,
+            'paths'     => [
+                'default' => __DIR__ . '/doctrine',
+            ]
+        ],
+
+        'orm_default' => [
+            'drivers' => [
+                'Roave\User\Entity' => 'roave_user_xml_driver'
+            ]
+        ]
+    ]
 ];

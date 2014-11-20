@@ -99,7 +99,7 @@ class UserRepository implements UserRepositoryInterface, ObjectRepository
      */
     public function findOneBy(array $criteria)
     {
-        return $this->findOneBy($criteria);
+        return $this->objectRepository->findOneBy($criteria);
     }
 
     /**

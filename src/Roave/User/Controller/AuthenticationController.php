@@ -112,6 +112,17 @@ class AuthenticationController extends AbstractActionController
         if ($result->isChallenge()) {
             return $this->getResponse();
         }
+
+        if ($result->isFailure()) {
+            // how do we know to redirect back to the login form ?
+        }
+
+        $redirect = $this->getRequest()->getQuery($this->options->getRedirectField());
+        if ($redirect) {
+            return $this->redirect()->toUrl($redirect);
+        }
+
+        return $this->redirect()->toRoute($this->options->getLoginRedirectToRoute());
     }
 
     /**

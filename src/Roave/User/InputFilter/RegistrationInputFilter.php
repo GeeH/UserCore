@@ -52,15 +52,6 @@ class RegistrationInputFilter extends InputFilter
     public function init()
     {
         $this->add([
-            'name'       => 'csrf_nonce',
-            'validators' => [
-                [
-                    'name' => Csrf::class
-                ]
-            ]
-        ]);
-
-        $this->add([
             'name'    => 'username',
             'filters' => [
                 [

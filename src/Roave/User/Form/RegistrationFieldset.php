@@ -38,12 +38,12 @@
 
 namespace Roave\User\Form;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
-use Roave\User\Entity\UserEntity;
-use Zend\Form\Element\Csrf;
-use Zend\Form\Form;
+use Zend\Form\Element\Email;
+use Zend\Form\Element\Password;
+use Zend\Form\Element\Text;
+use Zend\Form\Fieldset;
 
-class RegistrationForm extends Form
+class RegistrationFieldset extends Fieldset
 {
     /**
      * {@inheritDoc}
@@ -51,18 +51,28 @@ class RegistrationForm extends Form
     public function init()
     {
         $this->add([
-            'name' => 'csrf_nonce',
-            'type' => Csrf::class
+            'name' => 'username',
+            'type' => Text::class
         ]);
 
         $this->add([
-            'name'     => 'registration',
-            'type'     => RegistrationFieldset::class,
-            'hydrator' => DoctrineObject::class,
-            'object'   => UserEntity::class,
-            'options'  => [
-                'use_as_base_fieldset' => true
-            ]
+            'name' => 'email',
+            'type' => Email::class
+        ]);
+
+        $this->add([
+            'name' => 'password',
+            'type' => Password::class
+        ]);
+
+        $this->add([
+            'name' => 'firstName',
+            'type' => Text::class
+        ]);
+
+        $this->add([
+            'name' => 'lastName',
+            'type' => Text::class
         ]);
     }
 }

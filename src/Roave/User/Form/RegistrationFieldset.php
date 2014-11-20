@@ -38,12 +38,14 @@
 
 namespace Roave\User\Form;
 
+use Roave\User\InputFilter\RegistrationInputFilter;
 use Zend\Form\Element\Email;
 use Zend\Form\Element\Password;
 use Zend\Form\Element\Text;
 use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilterProviderInterface;
 
-class RegistrationFieldset extends Fieldset
+class RegistrationFieldset extends Fieldset implements InputFilterProviderInterface
 {
     /**
      * {@inheritDoc}
@@ -74,5 +76,13 @@ class RegistrationFieldset extends Fieldset
             'name' => 'lastName',
             'type' => Text::class
         ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInputFilterSpecification()
+    {
+        return ['type' => RegistrationInputFilter::class];
     }
 }

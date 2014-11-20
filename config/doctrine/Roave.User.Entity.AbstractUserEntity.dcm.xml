@@ -4,9 +4,9 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Roave\User\Entity\AbstractUserEntity">
+    <mapped-superclass name="Roave\User\Entity\AbstractUserEntity" table="roave_users">
 
-        <id name="id" type="int">
+        <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
 

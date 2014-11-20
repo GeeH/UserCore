@@ -38,6 +38,8 @@
 
 namespace Roave\User\Entity;
 
-class UserEntity extends AbstractUserEntity
+use Roave\NonceUtility\Stdlib\NonceOwnerInterface;
+
+class UserEntity extends AbstractUserEntity implements NonceOwnerInterface
 {
 }

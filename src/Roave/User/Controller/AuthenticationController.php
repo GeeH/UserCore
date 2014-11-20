@@ -53,6 +53,8 @@ use Zend\View\Model\ViewModel;
  */
 class AuthenticationController extends AbstractActionController
 {
+    const FLASH_MESSENGER_NAMESPACE = __CLASS__;
+
     /**
      * @var FormInterface
      */
@@ -114,7 +116,13 @@ class AuthenticationController extends AbstractActionController
         }
 
         if ($result->isFailure()) {
-            // how do we know to redirect back to the login form ?
+
+            $this
+                ->flashMessenger()
+                ->setNamespace(static::FLASH_MESSENGER_NAMESPACE)
+                ->addMessage($result->getPayload()->getMessage());
+
+            return $this->redirect()->toRoute($this->options->getLoginRoute());
         }
 
         $redirect = $this->getRequest()->getQuery($this->options->getRedirectField());

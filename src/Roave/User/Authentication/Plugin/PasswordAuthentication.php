@@ -68,13 +68,26 @@ class PasswordAuthentication implements AuthenticationPluginInterface
     }
 
     /**
+     * Return a failed authentication result with a nice error payload
+     *
+     * @return Result
+     */
+    private function getFailedAuthenticationResult()
+    {
+        return new Result(
+            Result::STATE_FAILURE,
+            new Error('Identity not found', 'No user matches the given credentials')
+        );
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function authenticateCredentials(ParametersInterface $credentials)
     {
         $user = $this->userRepository->getByIdentity($credentials->get('identity'));
         if (! $user) {
-            return new Error('Identity not found', 'No user matches the given credentials');
+            return $this->getFailedAuthenticationResult();
         }
 
         if (! $this->passwordHandler->supports($user->getPassword())) {
@@ -82,7 +95,7 @@ class PasswordAuthentication implements AuthenticationPluginInterface
         }
 
         if (!$this->passwordHandler->compare($credentials->get('password'), $user->getPassword())) {
-            return new Error('Invalid password', 'No user matches the given credentials');
+            return $this->getFailedAuthenticationResult();
         }
 
         return new Result(Result::STATE_SUCCESS, $user);

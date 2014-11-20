@@ -4,7 +4,9 @@
  * @var $this \Zend\View\Renderer\PhpRenderer
  */
 
+use Roave\User\Controller\AuthenticationController;
+
 $form->prepare();
 ?>
-
+<?= $this->flashMessenger()->render(AuthenticationController::class); ?>
 <?= $this->form($form); ?>

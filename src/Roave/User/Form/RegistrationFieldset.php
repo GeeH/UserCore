@@ -33,38 +33,56 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\User\Factory\Form;
+namespace Roave\User\Form;
 
-use Roave\User\Form\RegistrationForm;
-use Roave\User\Hydrator\RegistrationHydrator;
 use Roave\User\InputFilter\RegistrationInputFilter;
-use Zend\Form\FormElementManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Form\Element\Email;
+use Zend\Form\Element\Password;
+use Zend\Form\Element\Text;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilterProviderInterface;
 
-class RegistrationFormFactory implements FactoryInterface
+class RegistrationFieldset extends Fieldset implements InputFilterProviderInterface
 {
     /**
-     * Create the {@see RegistrationForm}
-     *
-     * @param FormElementManager|ServiceLocatorInterface $formManager
-     *
-     * @return RegistrationForm
+     * {@inheritDoc}
      */
-    public function createService(ServiceLocatorInterface $formManager)
+    public function init()
     {
-        $sl = $formManager->getServiceLocator();
+        $this->add([
+            'name' => 'username',
+            'type' => Text::class
+        ]);
 
-        $hydratorManager = $sl->get('hydratorManager');
-        $inputFilterManager = $sl->get('inputFilterManager');
+        $this->add([
+            'name' => 'email',
+            'type' => Email::class
+        ]);
 
-        $form = new RegistrationForm();
-        $form->setHydrator($hydratorManager->get(RegistrationHydrator::class));
-        $form->setInputFilter($inputFilterManager->get(RegistrationInputFilter::class));
+        $this->add([
+            'name' => 'password',
+            'type' => Password::class
+        ]);
 
-        return $form;
+        $this->add([
+            'name' => 'firstName',
+            'type' => Text::class
+        ]);
+
+        $this->add([
+            'name' => 'lastName',
+            'type' => Text::class
+        ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInputFilterSpecification()
+    {
+        return ['type' => RegistrationInputFilter::class];
     }
 }

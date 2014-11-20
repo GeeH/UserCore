@@ -33,15 +33,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 namespace Roave\User\Form;
 
+use Roave\User\Entity\UserEntity;
+use Roave\User\Hydrator\RegistrationHydrator;
 use Zend\Form\Element\Csrf;
-use Zend\Form\Element\Email;
-use Zend\Form\Element\Password;
-use Zend\Form\Element\Text;
 use Zend\Form\Form;
 
 class RegistrationForm extends Form
@@ -57,28 +56,13 @@ class RegistrationForm extends Form
         ]);
 
         $this->add([
-            'name' => 'username',
-            'type' => Text::class
-        ]);
-
-        $this->add([
-            'name' => 'email',
-            'type' => Email::class
-        ]);
-
-        $this->add([
-            'name' => 'password',
-            'type' => Password::class
-        ]);
-
-        $this->add([
-            'name' => 'firstName',
-            'type' => Text::class
-        ]);
-
-        $this->add([
-            'name' => 'lastName',
-            'type' => Text::class
+            'name'     => 'registration',
+            'type'     => RegistrationFieldset::class,
+            'hydrator' => RegistrationHydrator::class,
+            'object'   => UserEntity::class,
+            'options'  => [
+                'use_as_base_fieldset' => true
+            ]
         ]);
     }
 }

@@ -41,7 +41,6 @@ namespace Roave\User\InputFilter;
 use Roave\User\Validator\NoUserObjectExists;
 use Zend\Filter\StringTrim;
 use Zend\InputFilter\InputFilter;
-use Zend\Validator\Csrf;
 use Zend\Validator\StringLength;
 
 class RegistrationInputFilter extends InputFilter

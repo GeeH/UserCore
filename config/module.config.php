@@ -37,6 +37,7 @@
  */
 
 use BaconAuthentication\PluggableAuthenticationService;
+use Doctrine\Common\Persistence\ObjectManager;
 use Roave\User\Authentication\Plugin\PasswordAuthentication;
 use Roave\User\Controller\AuthenticationController;
 use Roave\User\Controller\RegistrationController;
@@ -45,8 +46,10 @@ use Roave\User\Factory\Authentication\Plugin\PasswordAuthenticationFactory;
 use Roave\User\Factory\Controller\AuthenticationControllerFactory;
 use Roave\User\Factory\Controller\RegistrationControllerFactory;
 use Roave\User\Factory\PluggableAuthenticationServiceFactory;
+use Roave\User\Factory\Repository\UserRepositoryFactory;
 use Roave\User\Factory\Validator\NoUserObjectExistsFactory;
 use Roave\User\Factory\Validator\UserObjectExistsFactory;
+use Roave\User\Repository\UserRepository;
 use Roave\User\Validator\NoUserObjectExists;
 use Roave\User\Validator\UserObjectExists;
 
@@ -72,7 +75,9 @@ return [
 
         'factories' => [
             PasswordAuthentication::class         => PasswordAuthenticationFactory::class,
-            PluggableAuthenticationService::class => PluggableAuthenticationServiceFactory::class
+            PluggableAuthenticationService::class => PluggableAuthenticationServiceFactory::class,
+
+            UserRepository::class => UserRepositoryFactory::class
         ]
     ],
 

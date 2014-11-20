@@ -38,8 +38,8 @@
 
 namespace Roave\User\Form;
 
-use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use Roave\User\Entity\UserEntity;
+use Roave\User\Hydrator\RegistrationHydrator;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Form;
 
@@ -58,7 +58,7 @@ class RegistrationForm extends Form
         $this->add([
             'name'     => 'registration',
             'type'     => RegistrationFieldset::class,
-            'hydrator' => DoctrineObject::class,
+            'hydrator' => RegistrationHydrator::class,
             'object'   => UserEntity::class,
             'options'  => [
                 'use_as_base_fieldset' => true

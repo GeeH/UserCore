@@ -79,6 +79,7 @@ class Bootstrap
             ],
 
             'modules' => [
+                'BaconUser',
                 'BaconAuthentication',
                 'Roave\User'
             ]

@@ -47,11 +47,13 @@ use Roave\User\Factory\Controller\RegistrationControllerFactory;
 use Roave\User\Factory\Hydrator\RegistrationHydratorFactory;
 use Roave\User\Factory\PluggableAuthenticationServiceFactory;
 use Roave\User\Factory\Repository\UserRepositoryFactory;
+use Roave\User\Factory\Service\UserServiceFactory;
 use Roave\User\Factory\Stdlib\Hydrator\Strategy\PasswordStrategyFactory;
 use Roave\User\Factory\Validator\NoUserObjectExistsFactory;
 use Roave\User\Factory\Validator\UserObjectExistsFactory;
 use Roave\User\Hydrator\RegistrationHydrator;
 use Roave\User\Repository\UserRepository;
+use Roave\User\Service\UserService;
 use Roave\User\Stdlib\Hydrator\Strategy\PasswordStrategy;
 use Roave\User\Validator\NoUserObjectExists;
 use Roave\User\Validator\UserObjectExists;
@@ -86,6 +88,9 @@ return [
             // Authentication
             PasswordAuthentication::class         => PasswordAuthenticationFactory::class,
             PluggableAuthenticationService::class => PluggableAuthenticationServiceFactory::class,
+
+            // Services
+            UserService::class => UserServiceFactory::class,
 
             // Repository
             UserRepository::class => UserRepositoryFactory::class,

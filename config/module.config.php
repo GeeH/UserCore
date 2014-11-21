@@ -108,7 +108,8 @@ return [
             'roave/user/authentication/logout' => __DIR__ . '/../view/authentication/logout.phtml',
 
             // Registration views
-            'roave/user/registration/form' => __DIR__ . '/../view/registration/form.phtml'
+            'roave/user/registration/form'    => __DIR__ . '/../view/registration/form.phtml',
+            'roave/user/registration/success' => __DIR__ . '/../view/registration/success.phtml'
         ]
     ],
 

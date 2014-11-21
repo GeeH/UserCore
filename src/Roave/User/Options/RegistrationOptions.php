@@ -48,7 +48,21 @@ class RegistrationOptions extends AbstractOptions
      *
      * @var string
      */
-    private $template = 'roave/user/registration/form';
+    private $formTemplate = 'roave/user/registration/form';
+
+    /**
+     * The template used when the user successfully registers
+     *
+     * @var string
+     */
+    private $successTemplate = 'roave/user/registration/success';
+
+    /**
+     * Redirect to this route on a successful registration
+     *
+     * @var string|null
+     */
+    private $redirectOnSuccessToRoute;
 
     /**
      * The form to use
@@ -60,17 +74,49 @@ class RegistrationOptions extends AbstractOptions
     /**
      * @return string
      */
-    public function getTemplate()
+    public function getSuccessTemplate()
     {
-        return $this->template;
+        return $this->successTemplate;
     }
 
     /**
-     * @param string $template
+     * @param string $successTemplate
      */
-    public function setTemplate($template)
+    public function setSuccessTemplate($successTemplate)
     {
-        $this->template = (string) $template;
+        $this->successTemplate = (string) $successTemplate;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getRedirectOnSuccessToRoute()
+    {
+        return $this->redirectOnSuccessToRoute;
+    }
+
+    /**
+     * @param null|string $redirectOnSuccessToRoute
+     */
+    public function setRedirectOnSuccessToRoute($redirectOnSuccessToRoute)
+    {
+        $this->redirectOnSuccessToRoute = (string) $redirectOnSuccessToRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormTemplate()
+    {
+        return $this->formTemplate;
+    }
+
+    /**
+     * @param string $formTemplate
+     */
+    public function setFormTemplate($formTemplate)
+    {
+        $this->formTemplate = (string) $formTemplate;
     }
 
     /**

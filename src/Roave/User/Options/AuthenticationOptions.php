@@ -44,13 +44,6 @@ use Zend\Stdlib\AbstractOptions;
 class AuthenticationOptions extends AbstractOptions
 {
     /**
-     * The field that is the users identity
-     *
-     * @var string
-     */
-    private $identityField = 'email';
-
-    /**
      * The route to use that actually executes the authentication process
      *
      * @var string
@@ -255,21 +248,5 @@ class AuthenticationOptions extends AbstractOptions
     public function setLogoutRoute($logoutRoute)
     {
         $this->logoutRoute = (string) $logoutRoute;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdentityField()
-    {
-        return $this->identityField;
-    }
-
-    /**
-     * @param string $identityField
-     */
-    public function setIdentityField($identityField)
-    {
-        $this->identityField = (string) $identityField;
     }
 }

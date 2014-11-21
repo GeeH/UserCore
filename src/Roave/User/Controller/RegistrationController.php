@@ -39,6 +39,7 @@
 namespace Roave\User\Controller;
 
 use Roave\User\Options\RegistrationOptions;
+use Roave\User\Service\UserServiceInterface;
 use Zend\Form\FormInterface;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -63,13 +64,20 @@ class RegistrationController extends AbstractActionController
     private $options;
 
     /**
-     * @param RegistrationOptions $options
-     * @param FormInterface       $form
+     * @var UserServiceInterface
      */
-    public function __construct(RegistrationOptions $options, FormInterface $form)
+    private $userService;
+
+    /**
+     * @param RegistrationOptions  $options
+     * @param FormInterface        $form
+     * @param UserServiceInterface $userService
+     */
+    public function __construct(RegistrationOptions $options, FormInterface $form, UserServiceInterface $userService)
     {
-        $this->form    = $form;
-        $this->options = $options;
+        $this->form        = $form;
+        $this->options     = $options;
+        $this->userService = $userService;
     }
 
     /**
@@ -85,18 +93,31 @@ class RegistrationController extends AbstractActionController
             return $prg;
         }
 
-        if (is_array($prg)) {
+        $model = new ViewModel();
+        $model->setTemplate($this->options->getFormTemplate());
+        $model->setVariable('form', $this->form);
 
-            $this->form->setData($prg);
-            if ($this->form->isValid()) {
-
-                $user = $this->form->getObject();
-            }
+        if (!is_array($prg)) {
+            return $model;
         }
 
-        $model = new ViewModel();
-        $model->setTemplate($this->options->getTemplate());
-        $model->setVariable('form', $this->form);
+        $this->form->setData($prg);
+        if ($this->form->isValid()) {
+
+            $user = $this->form->getObject();
+
+            if (!$this->userService->create($user)) {
+                // todo: not sure about this one...
+                throw new \LogicException('An error occurred');
+            }
+
+            if ($this->options->getRedirectOnSuccessToRoute() !== null) {
+                return $this->redirect()->toRoute($this->options->getRedirectOnSuccessToRoute());
+            }
+
+            $model->setTemplate($this->options->getSuccessTemplate());
+            $model->setVariable('user', $user);
+        }
 
         return $model;
     }

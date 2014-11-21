@@ -40,6 +40,7 @@ namespace Roave\User\Factory\Controller;
 
 use Roave\User\Controller\RegistrationController;
 use Roave\User\Options\RegistrationOptions;
+use Roave\User\Service\UserService;
 use Zend\Form\FormInterface;
 use Zend\Mvc\Controller\ControllerManager;
 use Zend\ServiceManager\FactoryInterface;
@@ -64,8 +65,10 @@ class RegistrationControllerFactory implements FactoryInterface
          * @var $form FormInterface
          */
         $options = $sl->get(RegistrationOptions::class);
+        $userService = $sl->get(UserService::class);
+
         $form = $formElementManager->get($options->getForm());
 
-        return new RegistrationController($options, $form);
+        return new RegistrationController($options, $form, $userService);
     }
 }

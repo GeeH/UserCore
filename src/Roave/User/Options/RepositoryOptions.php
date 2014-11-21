@@ -36,31 +36,59 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\User\Factory\Repository;
+namespace Roave\User\Options;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use Roave\User\Options\RepositoryOptions;
-use Roave\User\Repository\UserRepository;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Roave\User\Entity\UserEntity;
+use Zend\Stdlib\AbstractOptions;
 
-class UserRepositoryFactory implements FactoryInterface
+/**
+ * Class RepositoryOptions
+ */
+class RepositoryOptions extends AbstractOptions
 {
     /**
-     * Create service
+     * The user entity to require the repository from
      *
-     * @param ServiceLocatorInterface $serviceLocator
-     *
-     * @return mixed
+     * @var string
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    private $entity = UserEntity::class;
+
+    /**
+     * The field on the user that is deemed the identifier
+     *
+     * @var string
+     */
+    private $identifierProperty = 'email';
+
+    /**
+     * @return string
+     */
+    public function getEntity()
     {
-        /** @var RepositoryOptions $options */
-        $options = $serviceLocator->get(RepositoryOptions::class);
+        return $this->entity;
+    }
 
-        /** @var ObjectManager $objectManager */
-        $objectManager = $serviceLocator->get('Roave\User\ObjectManager');
+    /**
+     * @param string $entity
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = (string) $entity;
+    }
 
-        return new UserRepository($objectManager->getRepository($options->getEntity()), $options);
+    /**
+     * @return string
+     */
+    public function getIdentifierProperty()
+    {
+        return $this->identifierProperty;
+    }
+
+    /**
+     * @param string $identifierProperty
+     */
+    public function setIdentifierProperty($identifierProperty)
+    {
+        $this->identifierProperty = (string) $identifierProperty;
     }
 }

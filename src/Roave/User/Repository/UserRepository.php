@@ -39,7 +39,7 @@
 namespace Roave\User\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Roave\User\Options\AuthenticationOptions;
+use Roave\User\Options\RepositoryOptions;
 
 class UserRepository implements UserRepositoryInterface, ObjectRepository
 {
@@ -49,15 +49,15 @@ class UserRepository implements UserRepositoryInterface, ObjectRepository
     private $objectRepository;
 
     /**
-     * @var AuthenticationOptions
+     * @var RepositoryOptions
      */
     private $options;
 
     /**
-     * @param ObjectRepository      $objectRepository
-     * @param AuthenticationOptions $options
+     * @param ObjectRepository  $objectRepository
+     * @param RepositoryOptions $options
      */
-    public function __construct(ObjectRepository $objectRepository, AuthenticationOptions $options)
+    public function __construct(ObjectRepository $objectRepository, RepositoryOptions $options)
     {
         $this->options          = $options;
         $this->objectRepository = $objectRepository;
@@ -68,7 +68,7 @@ class UserRepository implements UserRepositoryInterface, ObjectRepository
      */
     public function getByIdentity($identity)
     {
-        return $this->findOneBy([$this->options->getIdentityField() => (string) $identity]);
+        return $this->findOneBy([$this->options->getIdentifierProperty() => (string) $identity]);
     }
 
     /**

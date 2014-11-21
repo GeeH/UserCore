@@ -41,6 +41,7 @@ namespace Roave\User\Form;
 use Roave\User\Entity\UserEntity;
 use Roave\User\Hydrator\RegistrationHydrator;
 use Zend\Form\Element\Csrf;
+use Zend\Form\Element\Submit;
 use Zend\Form\Form;
 
 class RegistrationForm extends Form
@@ -56,6 +57,14 @@ class RegistrationForm extends Form
         ]);
 
         $this->add([
+            'name'       => 'submit',
+            'type'       => Submit::class,
+            'attributes' => [
+                'value' => 'Submit'
+            ]
+        ], ['priority' => 0]);
+
+        $this->add([
             'name'     => 'registration',
             'type'     => RegistrationFieldset::class,
             'hydrator' => RegistrationHydrator::class,
@@ -63,6 +72,6 @@ class RegistrationForm extends Form
             'options'  => [
                 'use_as_base_fieldset' => true
             ]
-        ]);
+        ], ['priority' => 10]);
     }
 }

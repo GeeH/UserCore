@@ -53,28 +53,43 @@ class RegistrationFieldset extends Fieldset implements InputFilterProviderInterf
     public function init()
     {
         $this->add([
-            'name' => 'username',
-            'type' => Text::class
+            'name'    => 'username',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'Username'
+            ]
         ]);
 
         $this->add([
-            'name' => 'email',
-            'type' => Email::class
+            'name'    => 'email',
+            'type'    => Email::class,
+            'options' => [
+                'label' => 'Email'
+            ]
         ]);
 
         $this->add([
-            'name' => 'password',
-            'type' => Password::class
+            'name'    => 'password',
+            'type'    => Password::class,
+            'options' => [
+                'label' => 'Password'
+            ]
         ]);
 
         $this->add([
-            'name' => 'firstName',
-            'type' => Text::class
+            'name'    => 'firstName',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'First name'
+            ]
         ]);
 
         $this->add([
-            'name' => 'lastName',
-            'type' => Text::class
+            'name'    => 'lastName',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'Last name'
+            ]
         ]);
     }
 

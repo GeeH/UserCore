@@ -84,6 +84,15 @@ class ModificationProtectionListener implements ListenerAggregateInterface
         );
     }
 
+    /**
+     * Callback to authorize updating the user
+     *
+     * @throws UnauthorizedException
+     *
+     * @param UserEvent $user
+     *
+     * @return void
+     */
     public function authorizeUpdate(UserEvent $user)
     {
         if (!$this->authorizationService->isGranted(static::PERMISSION_UPDATE, $user->getUser())) {
@@ -91,6 +100,15 @@ class ModificationProtectionListener implements ListenerAggregateInterface
         }
     }
 
+    /**
+     * Callback to authorize deleting the user
+     *
+     * @throws UnauthorizedException
+     *
+     * @param UserEvent $user
+     *
+     * @return void
+     */
     public function authorizeDelete(UserEvent $user)
     {
         if (!$this->authorizationService->isGranted(static::PERMISSION_DELETE, $user->getUser())) {

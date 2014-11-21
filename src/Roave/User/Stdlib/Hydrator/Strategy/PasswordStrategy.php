@@ -36,55 +36,39 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\User\Hydrator;
+namespace Roave\User\Stdlib\Hydrator\Strategy;
 
-use Roave\User\Entity\UserEntityInterface;
-use Zend\Stdlib\Hydrator\AbstractHydrator;
+use BaconUser\Password\HandlerInterface;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
-class RegistrationHydrator extends AbstractHydrator
+class PasswordStrategy implements StrategyInterface
 {
     /**
-     * @param StrategyInterface $passwordStrategy
+     * @var HandlerInterface
      */
-    public function __construct(StrategyInterface $passwordStrategy)
+    private $handler;
+
+    /**
+     * @param HandlerInterface $handler
+     */
+    public function __construct(HandlerInterface $handler)
     {
-        $this->addStrategy('password', $passwordStrategy);
+        $this->handler = $handler;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function extract($object)
+    public function extract($value)
     {
-        if (! $object instanceof UserEntityInterface) {
-            throw Exception\InvalidObjectException::fromObject($object, UserEntityInterface::class);
-        }
-
-        return [
-            'id'        => $this->extractValue('id', $object->getId(), $object),
-            'email'     => $this->extractValue('email', $object->getEmail(), $object),
-            'username'  => $this->extractValue('username', $object->getUsername(), $object),
-            'firstName' => $this->extractValue('firstName', $object->getFirstName(), $object),
-            'lastName'  => $this->extractValue('lastName', $object->getLastName(), $object),
-        ];
+        return $value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function hydrate(array $data, $object)
+    public function hydrate($value)
     {
-        if (! $object instanceof UserEntityInterface) {
-            throw Exception\InvalidObjectException::fromObject($object, UserEntityInterface::class);
-        }
-
-        $object->setEmail($this->hydrateValue('email', $data['email'], $data));
-        $object->setUsername($this->hydrateValue('username', $data['username'], $data));
-        $object->setFirstName($this->hydrateValue('firstName', $data['firstName'], $data));
-        $object->setLastName($this->hydrateValue('lastName', $data['lastName'], $data));
-        $object->setPassword($this->hydrateValue('password', $data['password'], $data));
-
-        return $object;
+        return $this->handler->hash($value);
     }
 }

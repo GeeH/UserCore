@@ -37,7 +37,6 @@
  */
 
 use BaconAuthentication\PluggableAuthenticationService;
-use Doctrine\Common\Persistence\ObjectManager;
 use Roave\User\Authentication\Plugin\PasswordAuthentication;
 use Roave\User\Controller\AuthenticationController;
 use Roave\User\Controller\RegistrationController;
@@ -45,11 +44,15 @@ use Roave\User\Factory\AbstractOptionsFactory;
 use Roave\User\Factory\Authentication\Plugin\PasswordAuthenticationFactory;
 use Roave\User\Factory\Controller\AuthenticationControllerFactory;
 use Roave\User\Factory\Controller\RegistrationControllerFactory;
+use Roave\User\Factory\Hydrator\RegistrationHydratorFactory;
 use Roave\User\Factory\PluggableAuthenticationServiceFactory;
 use Roave\User\Factory\Repository\UserRepositoryFactory;
+use Roave\User\Factory\Stdlib\Hydrator\Strategy\PasswordStrategyFactory;
 use Roave\User\Factory\Validator\NoUserObjectExistsFactory;
 use Roave\User\Factory\Validator\UserObjectExistsFactory;
+use Roave\User\Hydrator\RegistrationHydrator;
 use Roave\User\Repository\UserRepository;
+use Roave\User\Stdlib\Hydrator\Strategy\PasswordStrategy;
 use Roave\User\Validator\NoUserObjectExists;
 use Roave\User\Validator\UserObjectExists;
 
@@ -68,23 +71,39 @@ return [
         ]
     ],
 
+    'hydrators' => [
+        'factories' => [
+            RegistrationHydrator::class => RegistrationHydratorFactory::class
+        ]
+    ],
+
     'service_manager' => [
         'abstract_factories' => [
             AbstractOptionsFactory::class => AbstractOptionsFactory::class
         ],
 
         'factories' => [
+            // Authentication
             PasswordAuthentication::class         => PasswordAuthenticationFactory::class,
             PluggableAuthenticationService::class => PluggableAuthenticationServiceFactory::class,
 
-            UserRepository::class => UserRepositoryFactory::class
+            // Repository
+            UserRepository::class => UserRepositoryFactory::class,
+
+            // Misc
+            PasswordStrategy::class => PasswordStrategyFactory::class
         ]
     ],
 
     'view_manager' => [
         'template_map' => [
+
+            // Authentication views
             'roave/user/authentication/login'  => __DIR__ . '/../view/authentication/login.phtml',
             'roave/user/authentication/logout' => __DIR__ . '/../view/authentication/logout.phtml',
+
+            // Registration views
+            'roave/user/registration/form' => __DIR__ . '/../view/registration/form.phtml'
         ]
     ],
 

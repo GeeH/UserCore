@@ -5,8 +5,10 @@
  */
 
 use Roave\User\Controller\AuthenticationController;
-
-$form->prepare();
 ?>
-<?= $this->flashMessenger()->render(AuthenticationController::class); ?>
-<?= $this->form($form); ?>
+<fieldset>
+    <legend>Authenticate</legend>
+    <?= $this->flashMessenger()->render(AuthenticationController::class); ?>
+    <?= $this->form($form); ?>
+</fieldset>
+

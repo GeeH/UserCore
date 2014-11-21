@@ -77,8 +77,21 @@ class RegistrationController extends AbstractActionController
      */
     public function indexAction()
     {
-        if ($this->getRequest()->isPost()) {
+        $this->form->setAttribute('method', 'POST');
+        $this->form->setAttribute('action', $this->getRequest()->getUriString());
 
+        $prg = $this->prg($this->getRequest()->getUriString(), true);
+        if ($prg instanceof Response) {
+            return $prg;
+        }
+
+        if (is_array($prg)) {
+
+            $this->form->setData($prg);
+            if ($this->form->isValid()) {
+
+                $user = $this->form->getObject();
+            }
         }
 
         $model = new ViewModel();

@@ -71,11 +71,17 @@ class ModificationProtectionListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(UserEvent::EVENT_UPDATE_PRE, [$this, 'authorizeUpdate'],
-            static::LISTENER_PRIORITY);
+        $this->listeners[] = $events->attach(
+            UserEvent::EVENT_UPDATE_PRE,
+            [$this, 'authorizeUpdate'],
+            static::LISTENER_PRIORITY
+        );
 
-        $this->listeners[] = $events->attach(UserEvent::EVENT_DELETE_PRE, [$this, 'authorizeDelete'],
-            static::LISTENER_PRIORITY);
+        $this->listeners[] = $events->attach(
+            UserEvent::EVENT_DELETE_PRE,
+            [$this, 'authorizeDelete'],
+            static::LISTENER_PRIORITY
+        );
     }
 
     public function authorizeUpdate(UserEvent $user)

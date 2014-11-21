@@ -40,8 +40,6 @@
 
 namespace Roave\UserTest;
 
-use RuntimeException;
-use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 
@@ -60,13 +58,15 @@ class Bootstrap
 
     public static function init()
     {
-        $zf2ModulePaths = [dirname(dirname(__DIR__))];
+        $zf2ModulePaths = [dirname(dirname(dirname(__DIR__)))];
         if (($path = static::findParentPath('vendor'))) {
             $zf2ModulePaths[] = $path;
         }
         if (($path = static::findParentPath('module')) !== $zf2ModulePaths[0]) {
             $zf2ModulePaths[] = $path;
         }
+
+        $zf2ModulePaths = array_filter($zf2ModulePaths);
 
         // use ModuleManager to load this module and it's dependencies
         $config = [

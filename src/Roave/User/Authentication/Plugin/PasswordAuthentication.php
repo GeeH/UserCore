@@ -98,6 +98,6 @@ class PasswordAuthentication implements AuthenticationPluginInterface
             return $this->getFailedAuthenticationResult();
         }
 
-        return new Result(Result::STATE_SUCCESS, $user);
+        return new Result(Result::STATE_SUCCESS, $user->getId());
     }
 }

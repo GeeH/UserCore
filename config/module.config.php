@@ -38,10 +38,12 @@
 
 use BaconAuthentication\PluggableAuthenticationService;
 use Roave\User\Authentication\Plugin\PasswordAuthentication;
+use Roave\User\Authentication\Plugin\ResolveUserIdentifier;
 use Roave\User\Controller\AuthenticationController;
 use Roave\User\Controller\RegistrationController;
 use Roave\User\Factory\AbstractOptionsFactory;
 use Roave\User\Factory\Authentication\Plugin\PasswordAuthenticationFactory;
+use Roave\User\Factory\Authentication\Plugin\ResolveUserIdentifierFactory;
 use Roave\User\Factory\Controller\AuthenticationControllerFactory;
 use Roave\User\Factory\Controller\RegistrationControllerFactory;
 use Roave\User\Factory\Hydrator\RegistrationHydratorFactory;
@@ -86,6 +88,7 @@ return [
 
         'factories' => [
             // Authentication
+            ResolveUserIdentifier::class          => ResolveUserIdentifierFactory::class,
             PasswordAuthentication::class         => PasswordAuthenticationFactory::class,
             PluggableAuthenticationService::class => PluggableAuthenticationServiceFactory::class,
 

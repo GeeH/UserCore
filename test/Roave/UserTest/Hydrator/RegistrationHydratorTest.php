@@ -39,9 +39,11 @@
 namespace Roave\UserTest\Hydrator;
 
 use ArrayObject;
+use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
 use Roave\User\Hydrator\Exception\InvalidObjectException;
 use Roave\User\Hydrator\RegistrationHydrator;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class RegistrationHydratorTest
@@ -59,9 +61,16 @@ class RegistrationHydratorTest extends PHPUnit_Framework_TestCase
      */
     private $hydrator;
 
+    /**
+     * @var PHPUnit_Framework_MockObject_MockObject|StrategyInterface
+     */
+    private $passwordStrategy;
+
     protected function setUp()
     {
-        $this->hydrator = new RegistrationHydrator();
+        $this->passwordStrategy = $this->getMock(StrategyInterface::class);
+
+        $this->hydrator = new RegistrationHydrator($this->passwordStrategy);
     }
 
     /**

@@ -54,7 +54,8 @@ class UserRepository implements UserRepositoryInterface, ObjectRepository
     private $options;
 
     /**
-     * @param ObjectRepository $objectRepository
+     * @param ObjectRepository      $objectRepository
+     * @param AuthenticationOptions $options
      */
     public function __construct(ObjectRepository $objectRepository, AuthenticationOptions $options)
     {

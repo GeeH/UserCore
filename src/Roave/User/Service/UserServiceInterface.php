@@ -36,9 +36,46 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\User\Event;
+namespace Roave\User\Service;
 
-class RegistrationEvent
+use Roave\User\Entity\UserEntityInterface;
+use Zend\EventManager\EventsCapableInterface;
+
+interface UserServiceInterface extends EventsCapableInterface
 {
-    const EVENT_REGISTRATION = 'user:registration.registration';
+    /**
+     * Update a user
+     *
+     * @triggers roave:user:update.pre
+     * @triggers roave:user:update.post
+     *
+     * @param UserEntityInterface $user
+     *
+     * @return bool
+     */
+    public function update(UserEntityInterface $user);
+
+    /**
+     * Create a new user
+     *
+     * @triggers roave:user:create.pre
+     * @triggers roave:user:create.post
+     *
+     * @param UserEntityInterface $user
+     *
+     * @return bool
+     */
+    public function create(UserEntityInterface $user);
+
+    /**
+     * Remove a user
+     *
+     * @triggers roave:user:delete.pre
+     * @triggers roave:user:delete.post
+     *
+     * @param UserEntityInterface $user
+     *
+     * @return bool
+     */
+    public function remove(UserEntityInterface $user);
 }

@@ -18,7 +18,12 @@
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",
-    "squizlabs/php_codesniffer": "~1.5.2"
+    "squizlabs/php_codesniffer": "~1.5.2",
+    "zf-commons/zfc-rbac": "~2.4"
+  },
+
+  "suggest": {
+      "zf-commons/zfc-rbac": "Use the builtin listeners to protect the user entities"
   },
 
   "autoload": {

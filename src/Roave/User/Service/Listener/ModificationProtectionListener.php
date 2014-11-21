@@ -33,7 +33,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
 namespace Roave\User\Service\Listener;
@@ -47,10 +47,11 @@ use ZfcRbac\Service\AuthorizationServiceInterface;
 
 class ModificationProtectionListener implements ListenerAggregateInterface
 {
+    use ListenerAggregateTrait;
+
+    const LISTENER_PRIORITY = 500;
     const PERMISSION_UPDATE = 'roave:user.update';
     const PERMISSION_DELETE = 'roave.user.delete';
-
-    use ListenerAggregateTrait;
 
     /**
      * @var AuthorizationServiceInterface
@@ -70,8 +71,11 @@ class ModificationProtectionListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(UserEvent::EVENT_UPDATE_PRE, [$this, 'authorizeUpdate']);
-        $this->listeners[] = $events->attach(UserEvent::EVENT_DELETE_PRE, [$this, 'authorizeDelete']);
+        $this->listeners[] = $events->attach(UserEvent::EVENT_UPDATE_PRE, [$this, 'authorizeUpdate'],
+            static::LISTENER_PRIORITY);
+
+        $this->listeners[] = $events->attach(UserEvent::EVENT_DELETE_PRE, [$this, 'authorizeDelete'],
+            static::LISTENER_PRIORITY);
     }
 
     public function authorizeUpdate(UserEvent $user)

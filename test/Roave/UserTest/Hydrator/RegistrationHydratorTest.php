@@ -36,64 +36,49 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\UserTest\Controller;
+namespace Roave\UserTest\Hydrator;
 
-use Roave\UserTest\Bootstrap;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use ArrayObject;
+use PHPUnit_Framework_TestCase;
+use Roave\User\Hydrator\Exception\InvalidObjectException;
+use Roave\User\Hydrator\RegistrationHydrator;
 
 /**
- * Class AuthenticationControllerTest
+ * Class RegistrationHydratorTest
  *
- * @coversDefaultClass \Roave\User\Controller\AuthenticationControllerTest
+ * @coversDefaultClass \Roave\User\Hydrator\RegistrationHydrator
  * @covers ::<!public>
  *
  * @group unit
- * @group controller
+ * @group hydrator
  */
-class AuthenticationControllerTest extends AbstractHttpControllerTestCase
+class RegistrationHydratorTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var RegistrationHydrator
+     */
+    private $hydrator;
+
     protected function setUp()
     {
-        $this->setApplicationConfig(Bootstrap::getServiceManager()->get('ApplicationConfig'));
+        $this->hydrator = new RegistrationHydrator();
     }
 
     /**
-     * @covers ::indexAction
+     * @covers ::hydrate
      */
-    public function testIndexReturnsProperlyConfiguredForm()
+    public function testHydrateWithInvalidObject()
     {
-        $this->markTestIncomplete('Not yet implemented');
+        $this->setExpectedException(InvalidObjectException::class);
+        $this->hydrator->hydrate([], new ArrayObject());
     }
 
     /**
-     * @covers ::logoutAction
+     * @covers ::extract
      */
-    public function testLogoutClearsIdentity()
+    public function testExtractWithInvalidObject()
     {
-        $this->markTestIncomplete('Not yet implemented');
-    }
-
-    /**
-     * @covers ::authenticateAction
-     */
-    public function testAuthenticateWithChallengeResponse()
-    {
-        $this->markTestIncomplete('Not yet implemented');
-    }
-
-    /**
-     * @covers ::authenticateAction
-     */
-    public function testAuthenticateWithFailureResponse()
-    {
-        $this->markTestIncomplete('Not yet implemented');
-    }
-
-    /**
-     * @covers ::authenticateAction
-     */
-    public function testAuthenticateWithSuccessfulResponse()
-    {
-        $this->markTestIncomplete('Not yet implemented');
+        $this->setExpectedException(InvalidObjectException::class);
+        $this->hydrator->extract(new ArrayObject());
     }
 }

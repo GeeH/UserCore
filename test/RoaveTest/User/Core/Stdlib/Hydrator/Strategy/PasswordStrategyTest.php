@@ -36,39 +36,57 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\User\Core\Stdlib\Hydrator\Strategy;
+namespace RoaveTest\User\Core\Stdlib\Hydrator\Strategy;
 
 use BaconUser\Password\HandlerInterface;
-use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
+use Roave\User\Core\Stdlib\Hydrator\Strategy\PasswordStrategy;
 
-class PasswordStrategy implements StrategyInterface
+/**
+ * Class PasswordStrategyTest
+ *
+ * @coversDefaultClass \Roave\User\Core\Stdlib\Hydrator\Strategy\PasswordStrategy
+ * @covers ::<!public>
+ *
+ * @group stdlib
+ */
+class PasswordStrategyTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var HandlerInterface
+     * @var HandlerInterface|PHPUnit_Framework_MockObject_MockObject
      */
     private $handler;
 
     /**
-     * @param HandlerInterface $handler
+     * @var PasswordStrategy
      */
-    public function __construct(HandlerInterface $handler)
+    private $strategy;
+
+    protected function setUp()
     {
-        $this->handler = $handler;
+        $this->handler = $this->getMock(HandlerInterface::class);
+        $this->strategy = new PasswordStrategy($this->handler);
     }
 
     /**
-     * {@inheritDoc}
+     * @covers ::extract
      */
-    public function extract($value)
+    public function testExtractReturnEmptyString()
     {
-        return '';
+        $this->assertEmpty($this->strategy->extract('helloWorld'));
     }
 
     /**
-     * {@inheritDoc}
+     * @covers ::hydrate
      */
-    public function hydrate($value)
+    public function testHydrate()
     {
-        return $this->handler->hash($value);
+        $this->handler
+            ->expects($this->once())
+            ->method('hash')
+            ->will($this->returnValue('helloWorld'));
+
+        $this->assertEquals('helloWorld', $this->strategy->hydrate('worldHello'));
     }
 }

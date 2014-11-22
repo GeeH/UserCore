@@ -35,6 +35,7 @@
  * @copyright 2014 Roave, LLC
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+
 namespace Roave\User\Core\Rbac\Assertion;
 
 use Roave\User\Core\Entity\UserEntityInterface;

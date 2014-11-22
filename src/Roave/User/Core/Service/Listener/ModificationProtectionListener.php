@@ -51,7 +51,7 @@ class ModificationProtectionListener implements ListenerAggregateInterface
 
     const LISTENER_PRIORITY = 500;
     const PERMISSION_UPDATE = 'roave:user.update';
-    const PERMISSION_DELETE = 'roave.user.delete';
+    const PERMISSION_DELETE = 'roave:user.delete';
 
     /**
      * @var AuthorizationServiceInterface

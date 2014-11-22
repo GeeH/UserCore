@@ -36,15 +36,32 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Entity;
 
-return [
-    AuthenticationOptions::class => [
+use DateTime;
 
-    ],
+interface UserEntityInterface
+{
+    public function getId();
 
-    RegistrationOptions::class => [
+    public function getUsername();
+    public function setUsername($username);
 
-    ]
-];
+    public function getEmail();
+    public function setEmail($email);
+
+    public function getPassword();
+    public function setPassword($password);
+
+    public function getFirstName();
+    public function setFirstName($firstName);
+
+    public function getLastName();
+    public function setLastName($lastName);
+
+    public function getCreatedAt();
+    public function setCreatedAt(DateTime $dateTime);
+
+    public function getUpdatedAt();
+    public function setUpdatedAt(DateTime $dateTime);
+}

@@ -36,15 +36,31 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Authentication\Plugin;
 
-return [
-    AuthenticationOptions::class => [
+use BaconAuthentication\Plugin\ResolutionPluginInterface;
+use Doctrine\Common\Persistence\ObjectRepository;
 
-    ],
+class ResolveUserIdentifier implements ResolutionPluginInterface
+{
+    /**
+     * @var ObjectRepository
+     */
+    private $repository;
 
-    RegistrationOptions::class => [
+    /**
+     * @param ObjectRepository $repository
+     */
+    public function __construct(ObjectRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
-    ]
-];
+    /**
+     * {@Inheritdoc}
+     */
+    public function resolveSubject($identifier)
+    {
+        return $this->repository->find($identifier);
+    }
+}

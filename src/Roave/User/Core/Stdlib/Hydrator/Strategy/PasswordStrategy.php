@@ -36,15 +36,39 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Stdlib\Hydrator\Strategy;
 
-return [
-    AuthenticationOptions::class => [
+use BaconUser\Password\HandlerInterface;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
-    ],
+class PasswordStrategy implements StrategyInterface
+{
+    /**
+     * @var HandlerInterface
+     */
+    private $handler;
 
-    RegistrationOptions::class => [
+    /**
+     * @param HandlerInterface $handler
+     */
+    public function __construct(HandlerInterface $handler)
+    {
+        $this->handler = $handler;
+    }
 
-    ]
-];
+    /**
+     * {@inheritDoc}
+     */
+    public function extract($value)
+    {
+        return $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hydrate($value)
+    {
+        return $this->handler->hash($value);
+    }
+}

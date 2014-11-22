@@ -36,15 +36,8 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Authentication\Plugin\Exception;
 
-return [
-    AuthenticationOptions::class => [
-
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+class LogicException extends \LogicException implements ExceptionInterface
+{
+}

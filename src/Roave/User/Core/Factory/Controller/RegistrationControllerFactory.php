@@ -36,15 +36,39 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
+namespace Roave\User\Core\Factory\Controller;
+
+use Roave\User\Core\Controller\RegistrationController;
 use Roave\User\Core\Options\RegistrationOptions;
+use Roave\User\Core\Service\UserService;
+use Zend\Form\FormInterface;
+use Zend\Mvc\Controller\ControllerManager;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-return [
-    AuthenticationOptions::class => [
+class RegistrationControllerFactory implements FactoryInterface
+{
+    /**
+     * Create the {@see RegistrationController}
+     *
+     * @param ControllerManager|ServiceLocatorInterface $controllerManager
+     *
+     * @return RegistrationController
+     */
+    public function createService(ServiceLocatorInterface $controllerManager)
+    {
+        $sl = $controllerManager->getServiceLocator();
+        $formElementManager = $sl->get('formElementManager');
 
-    ],
+        /**
+         * @var $options RegistrationOptions
+         * @var $form FormInterface
+         */
+        $options = $sl->get(RegistrationOptions::class);
+        $userService = $sl->get(UserService::class);
 
-    RegistrationOptions::class => [
+        $form = $formElementManager->get($options->getForm());
 
-    ]
-];
+        return new RegistrationController($options, $form, $userService);
+    }
+}

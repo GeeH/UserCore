@@ -36,15 +36,38 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
+namespace Roave\User\Core\Factory\Controller;
+
+use BaconAuthentication\PluggableAuthenticationService;
+use Roave\User\Core\Controller\AuthenticationController;
 use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+use Zend\Form\FormInterface;
+use Zend\Mvc\Controller\ControllerManager;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-return [
-    AuthenticationOptions::class => [
+class AuthenticationControllerFactory implements FactoryInterface
+{
+    /**
+     * Create the {@see AuthenticationController}
+     *
+     * @param ControllerManager|ServiceLocatorInterface $controllerManager
+     *
+     * @return AuthenticationController
+     */
+    public function createService(ServiceLocatorInterface $controllerManager)
+    {
+        $sl = $controllerManager->getServiceLocator();
+        $formElementManager = $sl->get('formElementManager');
 
-    ],
+        /**
+         * @var $options AuthenticationOptions
+         * @var $form FormInterface
+         */
+        $options = $sl->get(AuthenticationOptions::class);
+        $form = $formElementManager->get($options->getAuthenticationForm());
+        $authenticationService = $sl->get(PluggableAuthenticationService::class);
 
-    RegistrationOptions::class => [
-
-    ]
-];
+        return new AuthenticationController($options, $form, $authenticationService);
+    }
+}

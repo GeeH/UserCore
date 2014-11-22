@@ -36,15 +36,26 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Hydrator\Exception;
 
-return [
-    AuthenticationOptions::class => [
+use InvalidArgumentException;
 
-    ],
+class InvalidObjectException extends InvalidArgumentException implements ExceptionInterface
+{
+    /**
+     * A simple factory for creating a InvalidObjectException
+     *
+     * @param object $object
+     * @param string $expected
+     *
+     * @return static
+     */
+    public static function fromObject($object, $expected)
+    {
+        $actual = (is_object($object) ? get_class($object) : gettype($object));
 
-    RegistrationOptions::class => [
-
-    ]
-];
+        return new static(
+            sprintf('Expected an instanceof of "%s" received "%s".', $expected, $actual)
+        );
+    }
+}

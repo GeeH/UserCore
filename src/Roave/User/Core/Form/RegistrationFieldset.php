@@ -33,18 +33,71 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Form;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\InputFilter\RegistrationInputFilter;
+use Zend\Form\Element\Email;
+use Zend\Form\Element\Password;
+use Zend\Form\Element\Text;
+use Zend\Form\Fieldset;
+use Zend\InputFilter\InputFilterProviderInterface;
 
-    ],
+class RegistrationFieldset extends Fieldset implements InputFilterProviderInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function init()
+    {
+        $this->add([
+            'name'    => 'username',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'Username'
+            ]
+        ]);
 
-    RegistrationOptions::class => [
+        $this->add([
+            'name'    => 'email',
+            'type'    => Email::class,
+            'options' => [
+                'label' => 'Email'
+            ]
+        ]);
 
-    ]
-];
+        $this->add([
+            'name'    => 'password',
+            'type'    => Password::class,
+            'options' => [
+                'label' => 'Password'
+            ]
+        ]);
+
+        $this->add([
+            'name'    => 'firstName',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'First name'
+            ]
+        ]);
+
+        $this->add([
+            'name'    => 'lastName',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'Last name'
+            ]
+        ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInputFilterSpecification()
+    {
+        return ['type' => RegistrationInputFilter::class];
+    }
+}

@@ -36,15 +36,37 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory;
 
-return [
-    AuthenticationOptions::class => [
+use Zend\ServiceManager\AbstractFactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-    ],
+/**
+ * Class AbstractOptionsFactory
+ *
+ * An abstract factory that allows for the creation of all option classes under that assumption that.
+ *
+ * - They are located in the Roave\User\Core\Options namespace or sub-namespace.
+ * - The configuration is loaded from the FQCN in the config['roave']['options'] configuration array.
+ */
+class AbstractOptionsFactory implements AbstractFactoryInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        return substr($requestedName, 0, 23) === 'Roave\User\Core\Options';
+    }
 
-    RegistrationOptions::class => [
+    /**
+     * {@inheritDoc}
+     */
+    public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
+    {
+        $config = $serviceLocator->get('Config')['roave']['options'];
+        $config = isset($config[$requestedName]) ? $config[$requestedName] : [];
 
-    ]
-];
+        return new $requestedName($config);
+    }
+}

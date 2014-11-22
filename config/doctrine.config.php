@@ -40,7 +40,7 @@ use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
 return [
     'driver' => [
-        'roave_user_xml_driver' => [
+        'roave_user_core_xml_driver' => [
             'class'     => XmlDriver::class,
             'paths'     => [
                 'default' => __DIR__ . '/doctrine',
@@ -49,7 +49,7 @@ return [
 
         'orm_default' => [
             'drivers' => [
-                'Roave\User\Entity' => 'roave_user_xml_driver'
+                'Roave\User\Core\Entity' => 'roave_user_core_xml_driver'
             ]
         ]
     ]

@@ -36,15 +36,64 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace RoaveTest\User\Core\Controller;
 
-return [
-    AuthenticationOptions::class => [
+use RoaveTest\User\Core\Bootstrap;
+use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-    ],
+/**
+ * Class AuthenticationControllerTest
+ *
+ * @coversDefaultClass \Roave\User\Controller\AuthenticationControllerTest
+ * @covers ::<!public>
+ *
+ * @group unit
+ * @group controller
+ */
+class AuthenticationControllerTest extends AbstractHttpControllerTestCase
+{
+    protected function setUp()
+    {
+        $this->setApplicationConfig(Bootstrap::getServiceManager()->get('ApplicationConfig'));
+    }
 
-    RegistrationOptions::class => [
+    /**
+     * @covers ::indexAction
+     */
+    public function testIndexReturnsProperlyConfiguredForm()
+    {
+        $this->markTestIncomplete('Not yet implemented');
+    }
 
-    ]
-];
+    /**
+     * @covers ::logoutAction
+     */
+    public function testLogoutClearsIdentity()
+    {
+        $this->markTestIncomplete('Not yet implemented');
+    }
+
+    /**
+     * @covers ::authenticateAction
+     */
+    public function testAuthenticateWithChallengeResponse()
+    {
+        $this->markTestIncomplete('Not yet implemented');
+    }
+
+    /**
+     * @covers ::authenticateAction
+     */
+    public function testAuthenticateWithFailureResponse()
+    {
+        $this->markTestIncomplete('Not yet implemented');
+    }
+
+    /**
+     * @covers ::authenticateAction
+     */
+    public function testAuthenticateWithSuccessfulResponse()
+    {
+        $this->markTestIncomplete('Not yet implemented');
+    }
+}

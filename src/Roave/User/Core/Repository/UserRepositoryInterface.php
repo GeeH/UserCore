@@ -36,15 +36,18 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Repository;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Entity\UserEntityInterface;
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+interface UserRepositoryInterface
+{
+    /**
+     * Retrieve a user by it's identity
+     *
+     * @param string $identity
+     *
+     * @return UserEntityInterface|null
+     */
+    public function getByIdentity($identity);
+}

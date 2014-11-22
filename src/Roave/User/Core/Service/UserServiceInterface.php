@@ -36,15 +36,46 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Service;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Entity\UserEntityInterface;
+use Zend\EventManager\EventsCapableInterface;
 
-    ],
+interface UserServiceInterface extends EventsCapableInterface
+{
+    /**
+     * Update a user
+     *
+     * @triggers roave:user:update.pre
+     * @triggers roave:user:update.post
+     *
+     * @param UserEntityInterface $user
+     *
+     * @return bool
+     */
+    public function update(UserEntityInterface $user);
 
-    RegistrationOptions::class => [
+    /**
+     * Create a new user
+     *
+     * @triggers roave:user:create.pre
+     * @triggers roave:user:create.post
+     *
+     * @param UserEntityInterface $user
+     *
+     * @return bool
+     */
+    public function create(UserEntityInterface $user);
 
-    ]
-];
+    /**
+     * Remove a user
+     *
+     * @triggers roave:user:delete.pre
+     * @triggers roave:user:delete.post
+     *
+     * @param UserEntityInterface $user
+     *
+     * @return bool
+     */
+    public function remove(UserEntityInterface $user);
+}

@@ -35,16 +35,23 @@
  * @copyright 2014 Roave, LLC
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+namespace Roave\User\Core\Rbac\Assertion;
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+use Roave\User\Core\Entity\UserEntityInterface;
+use ZfcRbac\Assertion\AssertionInterface;
+use ZfcRbac\Service\AuthorizationService;
 
-return [
-    AuthenticationOptions::class => [
+class UserMatchesCurrentIdentity implements AssertionInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function assert(AuthorizationService $authorizationService, $context = null)
+    {
+        if (! $context instanceof UserEntityInterface) {
+            throw Exception\InvalidContextException::fromContext($context, UserEntityInterface::class);
+        }
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+        return $authorizationService->getIdentity() === $context;
+    }
+}

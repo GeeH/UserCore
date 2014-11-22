@@ -33,18 +33,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @copyright 2014 Roave, LLC
- * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Form;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Entity\UserEntity;
+use Roave\User\Core\Hydrator\RegistrationHydrator;
+use Zend\Form\Element\Csrf;
+use Zend\Form\Element\Submit;
+use Zend\Form\Form;
 
-    ],
+class RegistrationForm extends Form
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function init()
+    {
+        $this->add([
+            'name' => 'csrf_nonce',
+            'type' => Csrf::class
+        ]);
 
-    RegistrationOptions::class => [
+        $this->add([
+            'name'       => 'submit',
+            'type'       => Submit::class,
+            'attributes' => [
+                'value' => 'Submit'
+            ]
+        ], ['priority' => 0]);
 
-    ]
-];
+        $this->add([
+            'name'     => 'registration',
+            'type'     => RegistrationFieldset::class,
+            'hydrator' => RegistrationHydrator::class,
+            'object'   => UserEntity::class,
+            'options'  => [
+                'use_as_base_fieldset' => true
+            ]
+        ], ['priority' => 10]);
+    }
+}

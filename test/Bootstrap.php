@@ -38,7 +38,7 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-namespace Roave\UserTest;
+namespace RoaveTest\User\Core;
 
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
@@ -81,7 +81,8 @@ class Bootstrap
             'modules' => [
                 'BaconUser',
                 'BaconAuthentication',
-                'Roave\User'
+
+                'Roave\User\Core'
             ]
         ];
 

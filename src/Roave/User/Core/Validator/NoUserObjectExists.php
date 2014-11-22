@@ -36,15 +36,15 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Validator;
 
-return [
-    AuthenticationOptions::class => [
+use DoctrineModule\Validator\NoObjectExists;
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+/**
+ * Class NoUserObjectExists
+ *
+ * A proxy to the {@see NoObjectExists} with a custom factory for the user repository
+ */
+class NoUserObjectExists extends NoObjectExists
+{
+}

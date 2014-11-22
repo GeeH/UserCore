@@ -36,15 +36,28 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory\Authentication\Plugin;
 
-return [
-    AuthenticationOptions::class => [
+use BaconUser\Password\HandlerAggregate;
+use Roave\User\Core\Authentication\Plugin\PasswordAuthentication;
+use Roave\User\Core\Repository\UserRepository;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+class PasswordAuthenticationFactory implements FactoryInterface
+{
+    /**
+     * Create the {@see PasswordAuthentication}
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return PasswordAuthentication
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return new PasswordAuthentication(
+            $serviceLocator->get(UserRepository::class),
+            $serviceLocator->get(HandlerAggregate::class)
+        );
+    }
+}

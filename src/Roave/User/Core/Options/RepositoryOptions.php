@@ -36,15 +36,59 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Options;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Entity\UserEntity;
+use Zend\Stdlib\AbstractOptions;
 
-    ],
+/**
+ * Class RepositoryOptions
+ */
+class RepositoryOptions extends AbstractOptions
+{
+    /**
+     * The user entity to require the repository from
+     *
+     * @var string
+     */
+    private $entity = UserEntity::class;
 
-    RegistrationOptions::class => [
+    /**
+     * The field on the user that is deemed the identifier
+     *
+     * @var string
+     */
+    private $identifierProperty = 'email';
 
-    ]
-];
+    /**
+     * @return string
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
+     * @param string $entity
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = (string) $entity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifierProperty()
+    {
+        return $this->identifierProperty;
+    }
+
+    /**
+     * @param string $identifierProperty
+     */
+    public function setIdentifierProperty($identifierProperty)
+    {
+        $this->identifierProperty = (string) $identifierProperty;
+    }
+}

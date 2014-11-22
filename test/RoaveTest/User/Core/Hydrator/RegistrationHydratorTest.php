@@ -36,15 +36,58 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace RoaveTest\User\Core\Hydrator;
 
-return [
-    AuthenticationOptions::class => [
+use ArrayObject;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
+use Roave\User\Core\Hydrator\Exception\InvalidObjectException;
+use Roave\User\Core\Hydrator\RegistrationHydrator;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
-    ],
+/**
+ * Class RegistrationHydratorTest
+ *
+ * @coversDefaultClass \Roave\User\Hydrator\RegistrationHydrator
+ * @covers ::<!public>
+ *
+ * @group unit
+ * @group hydrator
+ */
+class RegistrationHydratorTest extends PHPUnit_Framework_TestCase
+{
+    /**
+     * @var RegistrationHydrator
+     */
+    private $hydrator;
 
-    RegistrationOptions::class => [
+    /**
+     * @var PHPUnit_Framework_MockObject_MockObject|StrategyInterface
+     */
+    private $passwordStrategy;
 
-    ]
-];
+    protected function setUp()
+    {
+        $this->passwordStrategy = $this->getMock(StrategyInterface::class);
+
+        $this->hydrator = new RegistrationHydrator($this->passwordStrategy);
+    }
+
+    /**
+     * @covers ::hydrate
+     */
+    public function testHydrateWithInvalidObject()
+    {
+        $this->setExpectedException(InvalidObjectException::class);
+        $this->hydrator->hydrate([], new ArrayObject());
+    }
+
+    /**
+     * @covers ::extract
+     */
+    public function testExtractWithInvalidObject()
+    {
+        $this->setExpectedException(InvalidObjectException::class);
+        $this->hydrator->extract(new ArrayObject());
+    }
+}

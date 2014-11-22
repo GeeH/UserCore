@@ -36,15 +36,19 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core;
 
-return [
-    AuthenticationOptions::class => [
+use Zend\Loader\StandardAutoloader;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+class Module implements ConfigProviderInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function getConfig()
+    {
+        return include __DIR__ . '/../../../../config/module.config.php';
+    }
+}

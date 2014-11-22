@@ -36,15 +36,24 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory\Authentication\Plugin;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Authentication\Plugin\ResolveUserIdentifier;
+use Roave\User\Core\Repository\UserRepository;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+class ResolveUserIdentifierFactory implements FactoryInterface
+{
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return ResolveUserIdentifier
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return new ResolveUserIdentifier($serviceLocator->get(UserRepository::class));
+    }
+}

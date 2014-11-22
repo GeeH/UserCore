@@ -32,19 +32,71 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
+ * @author Antoine Hedgecock
+ *
  * @copyright 2014 Roave, LLC
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace RoaveTest\User\Core\Factory;
 
-return [
-    AuthenticationOptions::class => [
+use PHPUnit_Framework_MockObject_MockObject;
+use Roave\User\Core\Factory\AbstractOptionsFactory;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-    ],
+/**
+ * Class AbstractOptionsFactoryTest
+ *
+ * @coversDefaultClass \Roave\User\Factory\AbstractOptionsFactory
+ * @covers ::<!public>
+ *
+ * @group factory
+ */
+class AbstractOptionsFactoryTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * @var PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $sl;
 
-    RegistrationOptions::class => [
+    /**
+     * @var AbstractOptionsFactory
+     */
+    protected $factory;
 
-    ]
-];
+    protected function setUp()
+    {
+        $this->sl      = $this->getMock(ServiceLocatorInterface::class);
+        $this->factory = new AbstractOptionsFactory();
+    }
+
+    /**
+     * @return array
+     */
+    public function classes()
+    {
+        return [
+            ['RoaveUserCoreOptionsAuthenticationOptions', 'Roave\\User\\Core\\Options\\AuthenticationOptions', true],
+            ['RoaveUserCoreAuthenticationOptions', 'Roave\\User\\Core\\Authentication\\Options', false]
+        ];
+    }
+
+    /**
+     * @dataProvider classes
+     *
+     * @covers ::canCreateServiceWithName
+     *
+     * @param string $normalizedName
+     * @param string $requestedName
+     * @param string $canCreate
+     *
+     * @return void
+     */
+    public function testCanCreateOptionClasses($normalizedName, $requestedName, $canCreate)
+    {
+        $this->assertEquals(
+            $canCreate,
+            $this->factory->canCreateServiceWithName($this->sl, $normalizedName,  $requestedName)
+        );
+    }
+}

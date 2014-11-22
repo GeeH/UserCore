@@ -36,15 +36,23 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory\Service;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Service\UserService;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+class UserServiceFactory implements FactoryInterface
+{
+    /**
+     * Create the {@see UserService}
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return UserService
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return new UserService($serviceLocator->get('Roave\User\Core\ObjectManager'));
+    }
+}

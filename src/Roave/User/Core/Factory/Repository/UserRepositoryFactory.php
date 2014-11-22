@@ -36,15 +36,31 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory\Repository;
 
-return [
-    AuthenticationOptions::class => [
+use Doctrine\Common\Persistence\ObjectManager;
+use Roave\User\Core\Options\RepositoryOptions;
+use Roave\User\Core\Repository\UserRepository;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-    ],
+class UserRepositoryFactory implements FactoryInterface
+{
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        /** @var RepositoryOptions $options */
+        $options = $serviceLocator->get(RepositoryOptions::class);
 
-    RegistrationOptions::class => [
+        /** @var ObjectManager $objectManager */
+        $objectManager = $serviceLocator->get('Roave\User\Core\ObjectManager');
 
-    ]
-];
+        return new UserRepository($objectManager->getRepository($options->getEntity()), $options);
+    }
+}

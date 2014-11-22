@@ -36,15 +36,54 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory\Validator;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Repository\UserRepository;
+use Roave\User\Core\Validator\NoUserObjectExists;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\MutableCreationOptionsInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Validator\ValidatorPluginManager;
 
-    ],
+/**
+ * Class NoUserObjectExistsFactory
+ *
+ * Factory for the {@see NoUserObjectExists} validator
+ */
+class NoUserObjectExistsFactory implements FactoryInterface, MutableCreationOptionsInterface
+{
+    /**
+     * @var array
+     */
+    protected $options = [];
 
-    RegistrationOptions::class => [
+    /**
+     * Set creation options
+     *
+     * @param array $options
+     *
+     * @return void
+     */
+    public function setCreationOptions(array $options)
+    {
+        $this->options = $options;
+    }
 
-    ]
-];
+    /**
+     * Create the {@see NoUserObjectExists} validator
+     *
+     * @param ValidatorPluginManager|ServiceLocatorInterface $validatorPluginManager
+     *
+     * @return NoUserObjectExists
+     */
+    public function createService(ServiceLocatorInterface $validatorPluginManager)
+    {
+        $sl = $validatorPluginManager->getServiceLocator();
+
+        $options = array_merge([
+            'object_repository' => $sl->get(UserRepository::class)
+        ], $this->options);
+
+        return new NoUserObjectExists($options);
+    }
+}

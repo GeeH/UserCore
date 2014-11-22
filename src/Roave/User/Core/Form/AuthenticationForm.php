@@ -36,15 +36,69 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Form;
 
-return [
-    AuthenticationOptions::class => [
+use Zend\Form\Element\Csrf as CsrfElement;
+use Zend\Form\Element\Password;
+use Zend\Form\Element\Submit;
+use Zend\Form\Element\Text;
+use Zend\Form\Form;
+use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Validator\Csrf as CsrfValidator;
 
-    ],
+class AuthenticationForm extends Form implements InputFilterProviderInterface
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function init()
+    {
+        $this->add([
+            'name' => 'csrf_nonce',
+            'type' => CsrfElement::class
+        ]);
 
-    RegistrationOptions::class => [
+        $this->add([
+            'name' => 'identity',
+            'type' => Text::class,
 
-    ]
-];
+            'options' => [
+                'label' => 'Identity'
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'password',
+            'type' => Password::class,
+
+            'options' => [
+                'label' => 'Password'
+            ]
+        ]);
+
+        $this->add([
+            'name' => 'submit',
+            'type' => Submit::class,
+
+            'attributes' => [
+                'value' => 'Login',
+            ]
+        ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getInputFilterSpecification()
+    {
+        return [
+            'csrf_nonce' => [
+                'validators' => [
+                    [
+                        'name' => CsrfValidator::class
+                    ]
+                ]
+            ]
+        ];
+    }
+}

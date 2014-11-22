@@ -37,28 +37,28 @@
  */
 
 use BaconAuthentication\PluggableAuthenticationService;
-use Roave\User\Authentication\Plugin\PasswordAuthentication;
-use Roave\User\Authentication\Plugin\ResolveUserIdentifier;
-use Roave\User\Controller\AuthenticationController;
-use Roave\User\Controller\RegistrationController;
-use Roave\User\Factory\AbstractOptionsFactory;
-use Roave\User\Factory\Authentication\Plugin\PasswordAuthenticationFactory;
-use Roave\User\Factory\Authentication\Plugin\ResolveUserIdentifierFactory;
-use Roave\User\Factory\Controller\AuthenticationControllerFactory;
-use Roave\User\Factory\Controller\RegistrationControllerFactory;
-use Roave\User\Factory\Hydrator\RegistrationHydratorFactory;
-use Roave\User\Factory\PluggableAuthenticationServiceFactory;
-use Roave\User\Factory\Repository\UserRepositoryFactory;
-use Roave\User\Factory\Service\UserServiceFactory;
-use Roave\User\Factory\Stdlib\Hydrator\Strategy\PasswordStrategyFactory;
-use Roave\User\Factory\Validator\NoUserObjectExistsFactory;
-use Roave\User\Factory\Validator\UserObjectExistsFactory;
-use Roave\User\Hydrator\RegistrationHydrator;
-use Roave\User\Repository\UserRepository;
-use Roave\User\Service\UserService;
-use Roave\User\Stdlib\Hydrator\Strategy\PasswordStrategy;
-use Roave\User\Validator\NoUserObjectExists;
-use Roave\User\Validator\UserObjectExists;
+use Roave\User\Core\Authentication\Plugin\PasswordAuthentication;
+use Roave\User\Core\Authentication\Plugin\ResolveUserIdentifier;
+use Roave\User\Core\Controller\AuthenticationController;
+use Roave\User\Core\Controller\RegistrationController;
+use Roave\User\Core\Factory\AbstractOptionsFactory;
+use Roave\User\Core\Factory\Authentication\Plugin\PasswordAuthenticationFactory;
+use Roave\User\Core\Factory\Authentication\Plugin\ResolveUserIdentifierFactory;
+use Roave\User\Core\Factory\Controller\AuthenticationControllerFactory;
+use Roave\User\Core\Factory\Controller\RegistrationControllerFactory;
+use Roave\User\Core\Factory\Hydrator\RegistrationHydratorFactory;
+use Roave\User\Core\Factory\PluggableAuthenticationServiceFactory;
+use Roave\User\Core\Factory\Repository\UserRepositoryFactory;
+use Roave\User\Core\Factory\Service\UserServiceFactory;
+use Roave\User\Core\Factory\Stdlib\Hydrator\Strategy\PasswordStrategyFactory;
+use Roave\User\Core\Factory\Validator\NoUserObjectExistsFactory;
+use Roave\User\Core\Factory\Validator\UserObjectExistsFactory;
+use Roave\User\Core\Hydrator\RegistrationHydrator;
+use Roave\User\Core\Repository\UserRepository;
+use Roave\User\Core\Service\UserService;
+use Roave\User\Core\Stdlib\Hydrator\Strategy\PasswordStrategy;
+use Roave\User\Core\Validator\NoUserObjectExists;
+use Roave\User\Core\Validator\UserObjectExists;
 
 return [
     'controllers' => [

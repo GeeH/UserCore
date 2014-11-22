@@ -36,15 +36,24 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory\Stdlib\Hydrator\Strategy;
 
-return [
-    AuthenticationOptions::class => [
+use BaconUser\Password\HandlerAggregate;
+use Roave\User\Core\Stdlib\Hydrator\Strategy\PasswordStrategy;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-    ],
-
-    RegistrationOptions::class => [
-
-    ]
-];
+class PasswordStrategyFactory implements FactoryInterface
+{
+    /**
+     * Create the {@see PasswordStrategy}
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @return PasswordStrategy
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
+    {
+        return new PasswordStrategy($serviceLocator->get(HandlerAggregate::class));
+    }
+}

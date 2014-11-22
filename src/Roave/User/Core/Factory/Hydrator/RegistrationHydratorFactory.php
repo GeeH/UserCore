@@ -36,15 +36,27 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Core\Options\AuthenticationOptions;
-use Roave\User\Core\Options\RegistrationOptions;
+namespace Roave\User\Core\Factory\Hydrator;
 
-return [
-    AuthenticationOptions::class => [
+use Roave\User\Core\Hydrator\RegistrationHydrator;
+use Roave\User\Core\Stdlib\Hydrator\Strategy\PasswordStrategy;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\Hydrator\HydratorPluginManager;
 
-    ],
+class RegistrationHydratorFactory implements FactoryInterface
+{
+    /**
+     * Create the {@see RegistrationHydrator}
+     *
+     * @param HydratorPluginManager|ServiceLocatorInterface $hydratorManager
+     *
+     * @return RegistrationHydrator
+     */
+    public function createService(ServiceLocatorInterface $hydratorManager)
+    {
+        $sl = $hydratorManager->getServiceLocator();
 
-    RegistrationOptions::class => [
-
-    ]
-];
+        return new RegistrationHydrator($sl->get(PasswordStrategy::class));
+    }
+}

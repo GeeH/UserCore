@@ -11,7 +11,7 @@
         backupGlobals="false"
         syntaxCheck="true"
         >
-    <testsuite name="Roave\User tests">
+    <testsuite name="Roave\User\Core">
         <directory>./test</directory>
     </testsuite>
     <filter>

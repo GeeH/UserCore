@@ -29,13 +29,13 @@
 
   "autoload": {
     "psr-0": {
-      "Roave\\User": "src/"
+      "Roave\\User\\Core": "src/"
     }
   },
 
   "autoload-dev": {
     "psr-0": {
-      "Roave\\UserTest": "test/"
+      "RoaveTest\\User\\Core": "test/"
     }
   }
 }

@@ -95,7 +95,7 @@ abstract class AbstractUserEntity implements UserEntityInterface
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->id = (int) $id;
     }
 
     /**
@@ -111,7 +111,7 @@ abstract class AbstractUserEntity implements UserEntityInterface
      */
     public function setUsername($username)
     {
-        $this->username = $username;
+        $this->username = (string) $username;
     }
 
     /**
@@ -127,7 +127,7 @@ abstract class AbstractUserEntity implements UserEntityInterface
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+        $this->email = (string) $email;
     }
 
     /**
@@ -143,7 +143,7 @@ abstract class AbstractUserEntity implements UserEntityInterface
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = (string) $password;
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class AbstractUserEntity implements UserEntityInterface
      */
     public function setFirstName($firstName)
     {
-        $this->firstName = $firstName;
+        $this->firstName = (string) $firstName;
     }
 
     /**
@@ -175,7 +175,7 @@ abstract class AbstractUserEntity implements UserEntityInterface
      */
     public function setLastName($lastName)
     {
-        $this->lastName = $lastName;
+        $this->lastName = (string) $lastName;
     }
 
     /**

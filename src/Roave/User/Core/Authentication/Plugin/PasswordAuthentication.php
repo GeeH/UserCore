@@ -41,14 +41,14 @@ namespace Roave\User\Core\Authentication\Plugin;
 use BaconAuthentication\Plugin\AuthenticationPluginInterface;
 use BaconAuthentication\Result\Error;
 use BaconAuthentication\Result\Result;
-use BaconUser\Password\HandlerAggregate;
+use BaconUser\Password\HandlerInterface;
 use Roave\User\Core\Repository\UserRepositoryInterface;
 use Zend\Stdlib\ParametersInterface;
 
 class PasswordAuthentication implements AuthenticationPluginInterface
 {
     /**
-     * @var HandlerAggregate
+     * @var HandlerInterface
      */
     private $passwordHandler;
 
@@ -59,9 +59,9 @@ class PasswordAuthentication implements AuthenticationPluginInterface
 
     /**
      * @param UserRepositoryInterface $userRepository
-     * @param HandlerAggregate        $passwordHandler
+     * @param HandlerInterface        $passwordHandler
      */
-    public function __construct(UserRepositoryInterface $userRepository, HandlerAggregate $passwordHandler)
+    public function __construct(UserRepositoryInterface $userRepository, HandlerInterface $passwordHandler)
     {
         $this->userRepository  = $userRepository;
         $this->passwordHandler = $passwordHandler;

@@ -44,7 +44,7 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 /**
  * Class AuthenticationControllerTest
  *
- * @coversDefaultClass \Roave\User\Controller\AuthenticationControllerTest
+ * @coversDefaultClass \Roave\User\Core\Controller\AuthenticationControllerTest
  * @covers ::<!public>
  *
  * @group unit

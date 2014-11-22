@@ -47,7 +47,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 /**
  * Class AbstractOptionsFactoryTest
  *
- * @coversDefaultClass \Roave\User\Factory\AbstractOptionsFactory
+ * @coversDefaultClass \Roave\User\Core\Factory\AbstractOptionsFactory
  * @covers ::<!public>
  *
  * @group factory

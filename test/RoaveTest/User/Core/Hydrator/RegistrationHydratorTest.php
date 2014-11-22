@@ -48,7 +48,7 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 /**
  * Class RegistrationHydratorTest
  *
- * @coversDefaultClass \Roave\User\Hydrator\RegistrationHydrator
+ * @coversDefaultClass \Roave\User\Core\Hydrator\RegistrationHydrator
  * @covers ::<!public>
  *
  * @group unit

@@ -100,7 +100,12 @@ class UserService implements UserServiceInterface
      */
     public function update(UserEntityInterface $user)
     {
-        $result = $this->getEventManager()->trigger($this->createUserEvent(UserEvent::EVENT_UPDATE_PRE, $user));
+        $result = $this->getEventManager()->trigger(
+            $this->createUserEvent(UserEvent::EVENT_UPDATE_PRE, $user),
+            function ($result) {
+                return $result === false;
+            }
+        );
 
         if ($result->stopped() && $result->last() === false) {
             return false;
@@ -121,7 +126,12 @@ class UserService implements UserServiceInterface
      */
     public function create(UserEntityInterface $user)
     {
-        $result = $this->getEventManager()->trigger($this->createUserEvent(UserEvent::EVENT_CREATE_PRE, $user));
+        $result = $this->getEventManager()->trigger(
+            $this->createUserEvent(UserEvent::EVENT_CREATE_PRE, $user),
+            function ($result) {
+                return $result === false;
+            }
+        );
 
         if ($result->stopped() && $result->last() === false) {
             return false;
@@ -135,7 +145,7 @@ class UserService implements UserServiceInterface
 
         $this
             ->getEventManager()
-            ->trigger($this->createUserEvent(UserEvent::EVENT_UPDATE_POST, $user));
+            ->trigger($this->createUserEvent(UserEvent::EVENT_CREATE_POST, $user));
 
         return true;
     }
@@ -145,7 +155,12 @@ class UserService implements UserServiceInterface
      */
     public function remove(UserEntityInterface $user)
     {
-        $result = $this->getEventManager()->trigger($this->createUserEvent(UserEvent::EVENT_DELETE_PRE, $user));
+        $result = $this->getEventManager()->trigger(
+            $this->createUserEvent(UserEvent::EVENT_DELETE_PRE, $user),
+            function ($result) {
+                return $result === false;
+            }
+        );
 
         if ($result->stopped() && $result->last() === false) {
             return false;

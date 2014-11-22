@@ -82,6 +82,7 @@ class Bootstrap
                 'BaconUser',
                 'BaconAuthentication',
 
+                'Roave\NonceUtility',
                 'Roave\User\Core'
             ]
         ];

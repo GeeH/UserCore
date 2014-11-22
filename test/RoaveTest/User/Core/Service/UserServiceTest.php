@@ -88,6 +88,7 @@ class UserServiceTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::__construct
      * @covers ::getEventManager()
      */
     public function testEventManagerIsProperlyConfigured()

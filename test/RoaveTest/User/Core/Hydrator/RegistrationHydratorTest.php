@@ -41,6 +41,8 @@ namespace RoaveTest\User\Core\Hydrator;
 use ArrayObject;
 use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit_Framework_TestCase;
+use Roave\User\Core\Entity\UserEntity;
+use Roave\User\Core\Entity\UserEntityInterface;
 use Roave\User\Core\Hydrator\Exception\InvalidObjectException;
 use Roave\User\Core\Hydrator\RegistrationHydrator;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
@@ -74,6 +76,21 @@ class RegistrationHydratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return array
+     */
+    private function getData()
+    {
+        return [
+            'id'        => 1,
+            'email'     => 'github@roave.com',
+            'username'  => 'macnibblet',
+            'firstName' => 'Antoine',
+            'lastName'  => 'Hedgecock',
+            'password'  => 'hakuna matata'
+        ];
+    }
+
+    /**
      * @covers ::hydrate
      */
     public function testHydrateWithInvalidObject()
@@ -89,5 +106,67 @@ class RegistrationHydratorTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(InvalidObjectException::class);
         $this->hydrator->extract(new ArrayObject());
+    }
+
+    /**
+     * @covers ::hydrate
+     */
+    public function testHydrate()
+    {
+        $data = $this->getData();
+        $user = $this->getMock(UserEntityInterface::class);
+
+        $this->passwordStrategy
+            ->expects($this->once())
+            ->method('hydrate')
+            ->with($data['password'])
+            ->will($this->returnValue('lePassword'));
+
+        $user
+            ->expects($this->once())
+            ->method('setEmail')
+            ->with($data['email']);
+
+        $user
+            ->expects($this->once())
+            ->method('setUsername')
+            ->with($data['username']);
+
+        $user
+            ->expects($this->once())
+            ->method('setFirstName')
+            ->with($data['firstName']);
+
+        $user
+            ->expects($this->once())
+            ->method('setLastName')
+            ->with($data['lastName']);
+
+        $user
+            ->expects($this->once())
+            ->method('setPassword')
+            ->with('lePassword');
+
+        $this->assertSame($user, $this->hydrator->hydrate($data, $user));
+    }
+
+    /**
+     * @covers ::extract
+     */
+    public function testExtract()
+    {
+        $data = $this->getData();
+
+        // Never extract passwords..
+        unset($data['password']);
+
+        $user = new UserEntity();
+        $user->setId($data['id']);
+        $user->setEmail($data['email']);
+        $user->setUsername($data['username']);
+        $user->setFirstName($data['firstName']);
+        $user->setLastName($data['lastName']);
+
+        $this->assertEquals($data, $this->hydrator->extract($user));
     }
 }

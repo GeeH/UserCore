@@ -38,8 +38,15 @@
 
 namespace RoaveTest\User\Core\Controller;
 
-use RoaveTest\User\Core\Bootstrap;
-use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
+use BaconAuthentication\AuthenticationServiceInterface;
+use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit_Framework_TestCase;
+use Roave\User\Core\Controller\AuthenticationController;
+use Roave\User\Core\Options\AuthenticationOptions;
+use Zend\Form\FormInterface;
+use Zend\Http\Request;
+use Zend\Http\Response;
+use Zend\Mvc\Router\RouteMatch;
 
 /**
  * Class AuthenticationControllerTest
@@ -50,11 +57,53 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
  * @group unit
  * @group controller
  */
-class AuthenticationControllerTest extends AbstractHttpControllerTestCase
+class AuthenticationControllerTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var FormInterface|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $form;
+
+    /**
+     * @var AuthenticationOptions
+     */
+    private $options;
+
+    /**
+     * @var AuthenticationServiceInterface|PHPUnit_Framework_MockObject_MockObject
+     */
+    private $authenticationService;
+
+    /**
+     * @var Request
+     */
+    private $request;
+
+    /**
+     * @var Response
+     */
+    private $response;
+
+    /**
+     * @var AuthenticationController
+     */
+    private $controller;
+
     protected function setUp()
     {
-        $this->setApplicationConfig(Bootstrap::getServiceManager()->get('ApplicationConfig'));
+        $this->form                  = $this->getMock(FormInterface::class);
+        $this->options               = new AuthenticationOptions();
+        $this->authenticationService = $this->getMock(AuthenticationServiceInterface::class);
+
+        $this->request    = new Request();
+        $this->response   = new Response();
+        $this->routeMatch = new RouteMatch([]);
+
+        $this->controller = new AuthenticationController(
+            $this->options,
+            $this->form,
+            $this->authenticationService
+        );
     }
 
     /**
@@ -62,7 +111,17 @@ class AuthenticationControllerTest extends AbstractHttpControllerTestCase
      */
     public function testIndexReturnsProperlyConfiguredForm()
     {
-        $this->markTestIncomplete('Not yet implemented');
+        $this->form
+            ->expects($this->at(0))
+            ->method('setAttribute')
+            ->with('method', 'POST');
+
+        $this->form
+            ->expects($this->at(1))
+            ->method('setAttribute')
+            ->with('action', '/authenticate');
+
+        $result = $this->controller->dispatch($this->request, $this->response);
     }
 
     /**

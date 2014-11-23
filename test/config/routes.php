@@ -36,21 +36,55 @@
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
 
-use Roave\User\Controller\AuthenticationController;
+use Roave\User\Core\Controller\AuthenticationController;
+use Roave\User\Core\Controller\RegistrationController;
 
 return [
     'router' => [
         'routes' => [
             'login' => [
-                'type' => 'literal',
+                'type'    => 'literal',
                 'options' => [
                     'route'    => '/login',
                     'defaults' => [
                         'controller' => AuthenticationController::class,
-                        'action'     => 'login'
+                        'action'     => 'index'
                     ]
                 ]
-            ]
+            ],
+
+            'logout' => [
+                'type'    => 'literal',
+                'options' => [
+                    'route'    => '/logout',
+                    'defaults' => [
+                        'controller' => AuthenticationController::class,
+                        'action'     => 'logout'
+                    ]
+                ]
+            ],
+
+            'authenticate' => [
+                'type'    => 'literal',
+                'options' => [
+                    'route'    => '/authenticate',
+                    'defaults' => [
+                        'controller' => AuthenticationController::class,
+                        'action'     => 'authenticate'
+                    ]
+                ]
+            ],
+
+            'register' => [
+                'type'    => 'literal',
+                'options' => [
+                    'route'    => '/register',
+                    'defaults' => [
+                        'controller' => RegistrationController::class,
+                        'action'     => 'index'
+                    ]
+                ]
+            ],
         ]
     ]
 ];
